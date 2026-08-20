@@ -1,6 +1,10 @@
-using OpportunityHub.Domain.ValueObjects;
+namespace OpportunityHub.Domain.ValueObjects;
 
-public sealed class VersionContent
+/// <summary>
+/// Represents the complete content used to create or update
+/// an opportunity version.
+/// </summary>
+public sealed class OpportunityVersionContent
 {
     #region Properties
 
@@ -34,21 +38,15 @@ public sealed class VersionContent
 
     public LocalizedText? ProductOwnerPageUrl { get; init; }
 
-    // References
-    public IReadOnlyCollection<Guid> ChannelIds { get; init; } =
-        [];
+    public IReadOnlyCollection<Guid> ChannelIds { get; init; } = [];
 
-    public IReadOnlyCollection<Guid> SectorIds { get; init; } =
-        [];
+    public IReadOnlyCollection<Guid> SectorIds { get; init; } = [];
 
-    public IReadOnlyCollection<VersionFeature> Features { get; init; } =
-        [];
+    public IReadOnlyCollection<FeatureContent> Features { get; init; } = [];
 
-    public IReadOnlyCollection<VersionKeyAchievement> KeyAchievements { get; init; } =
-        [];
+    public IReadOnlyCollection<KeyAchievementContent> KeyAchievements { get; init; } = [];
 
-    public IReadOnlyCollection<VersionKpi> Kpis { get; init; } =
-        [];
+    public IReadOnlyCollection<KpiContent> Kpis { get; init; } = [];
 
     #endregion
 }

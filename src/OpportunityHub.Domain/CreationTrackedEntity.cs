@@ -1,6 +1,9 @@
 namespace OpportunityHub.Domain;
 
-public abstract class CreationTrackedEntity
+/// <summary>
+/// Base type for entities that have identity and creation tracking.
+/// </summary>
+public abstract class CreationTrackedEntity : EntityIdentity
 {
     public DateTime CreatedAtUtc { get; protected set; }
 
