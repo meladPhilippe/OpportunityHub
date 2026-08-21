@@ -61,8 +61,6 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
 
     public string? ProductOwnerPhone { get; private set; }
 
-    public LocalizedText? ProductOwnerPageUrl { get; private set; }
-
     #endregion
 
     #region Children
@@ -191,8 +189,6 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
         ProductOwnerName = content.ProductOwnerName;
         ProductOwnerEmail = content.ProductOwnerEmail;
         ProductOwnerPhone = content.ProductOwnerPhone;
-        ProductOwnerPageUrl = content.ProductOwnerPageUrl;
-
         ReplaceChannels(content.ChannelIds);
         ReplaceSectors(content.SectorIds);
         ReplaceFeatures(content.Features);

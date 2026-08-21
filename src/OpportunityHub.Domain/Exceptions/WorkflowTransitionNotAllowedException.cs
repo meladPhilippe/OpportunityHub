@@ -1,7 +1,6 @@
 using OpportunityHub.Domain.Workflow;
 
 namespace OpportunityHub.Domain.Exceptions;
-;
 public sealed class WorkflowTransitionNotAllowedException : DomainException
 {
     public WorkflowTransitionNotAllowedException(

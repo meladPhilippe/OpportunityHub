@@ -11,6 +11,7 @@ public sealed class LocalizedText
 
     public LocalizedText(string en, string? ar = null)
     {
+         ArgumentException.ThrowIfNullOrWhiteSpace(en);
         En = en;
         Ar = ar;
     }

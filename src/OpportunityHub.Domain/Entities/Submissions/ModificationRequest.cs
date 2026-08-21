@@ -39,7 +39,7 @@ public sealed class ModificationRequest : CreationTrackedEntity
                     StringComparison.OrdinalIgnoreCase)))
         {
             throw new InvalidOperationException(
-                $"A modification request already exists for field '{fieldName}'.");
+                $"A modification request already exists for field '{fieldName.Trim()}'.");
         }
 
         _items.Add(

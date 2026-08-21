@@ -68,7 +68,7 @@ public sealed class Submission : EntityIdentity
         DateTime? submittedAtUtc = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(submittedBy);
-
+        ValidateEditSummary(submissionType, editSummary);
         return new Submission(
             productVersionId,
             sequenceNumber,
@@ -119,6 +119,7 @@ public sealed class Submission : EntityIdentity
         string rejectedBy,
         DateTime? rejectedAtUtc = null)
     {
+        EnsureModificationRejectionAllowed();
         EnsureNoDecision();
 
         ModificationRejection = new ModificationRejection(
@@ -133,6 +134,7 @@ public sealed class Submission : EntityIdentity
         string rejectedBy,
         DateTime? rejectedAtUtc = null)
     {
+        EnsureFirstPublication();
         EnsureNoDecision();
 
         FinalRejection = new FinalRejection(
@@ -154,6 +156,49 @@ public sealed class Submission : EntityIdentity
         {
             throw new InvalidOperationException(
                 "The submission already has a workflow decision.");
+        }
+    }
+
+    private void EnsureFirstPublication()
+    {
+        if (SubmissionType != SubmissionType.FirstPublication)
+        {
+            throw new InvalidOperationException(
+                "An opportunity can only be rejected during first publication.");
+        }
+    }
+
+    private void EnsureModificationRejectionAllowed()
+{
+    if (SubmissionType is SubmissionType.FirstPublication
+        or SubmissionType.ManagerDirectEdit)
+    {
+        throw new InvalidOperationException(
+            $"Modification rejection is not allowed for submission type '{SubmissionType}'.");
+    }
+}
+
+    private static void ValidateEditSummary(
+    SubmissionType submissionType,
+    string? editSummary)
+    {
+        if (submissionType == SubmissionType.FirstPublication)
+        {
+            if (!string.IsNullOrWhiteSpace(editSummary))
+            {
+                throw new ArgumentException(
+                    "Edit summary must not be provided for first publication submissions.",
+                    nameof(editSummary));
+            }
+
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(editSummary))
+        {
+            throw new ArgumentException(
+                "Edit summary is required for non-first publication submissions.",
+                nameof(editSummary));
         }
     }
 

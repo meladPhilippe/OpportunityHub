@@ -9,8 +9,8 @@ namespace OpportunityHub.Domain.Entities.Audit;
 public sealed class AuditHistory : CreationTrackedObject
 {
     private AuditHistory(
-        Guid productId,
-        Guid productVersionId,
+        Guid opportunityId,
+        Guid opportunityVersionId,
         Guid? submissionId,
         long activitySequenceNumber,
         WorkflowActivityType activityType,
@@ -20,8 +20,8 @@ public sealed class AuditHistory : CreationTrackedObject
         DateTime? occurredAtUtc = null!)
         : base(createdBy, occurredAtUtc ?? DateTime.UtcNow)
     {
-        ProductId = productId;
-        ProductVersionId = productVersionId;
+        OpportunityId = opportunityId;
+        OpportunityVersionId = opportunityVersionId;
         SubmissionId = submissionId;
         ActivitySequenceNumber = activitySequenceNumber;
         ActivityType = activityType;
@@ -31,9 +31,9 @@ public sealed class AuditHistory : CreationTrackedObject
 
     #region Properties
 
-    public Guid ProductId { get; private set; }
+    public Guid OpportunityId { get; private set; }
 
-    public Guid ProductVersionId { get; private set; }
+    public Guid OpportunityVersionId { get; private set; }
 
     public Guid? SubmissionId { get; private set; }
 
@@ -50,8 +50,8 @@ public sealed class AuditHistory : CreationTrackedObject
     #region Factory
 
     internal static AuditHistory Create(
-        Guid productId,
-        Guid productVersionId,
+        Guid opportunityId,
+        Guid opportunityVersionId,
         Guid? submissionId,
         long activitySequenceNumber,
         WorkflowActivityType activityType,
@@ -61,8 +61,8 @@ public sealed class AuditHistory : CreationTrackedObject
         DateTime? occurredAtUtc = null!)
     {
         return new AuditHistory(
-            productId,
-            productVersionId,
+            opportunityId,
+            opportunityVersionId,
             submissionId,
             activitySequenceNumber,
             activityType,

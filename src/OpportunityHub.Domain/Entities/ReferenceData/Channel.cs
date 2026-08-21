@@ -16,6 +16,20 @@ public sealed class Channel : ChangeTrackedEntity
         DateTime createdAtUtc)
         : base(createdBy, createdAtUtc)
     {
+        if (code <= 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(code),
+                "Channel code must be greater than zero.");
+        }
+
+        if (sortOrder < 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(sortOrder),
+                "Sort order cannot be negative.");
+        }
+
         Code = code;
         Name = name;
         SortOrder = sortOrder;
@@ -66,6 +80,7 @@ public sealed class Channel : ChangeTrackedEntity
         string updatedBy,
         DateTime? updatedAtUtc = null)
     {
+        ValidateUpdatedBy(updatedBy);
         IsActive = true;
 
         TrackUpdate(
@@ -77,11 +92,17 @@ public sealed class Channel : ChangeTrackedEntity
         string updatedBy,
         DateTime? updatedAtUtc = null)
     {
+        ValidateUpdatedBy(updatedBy);
         IsActive = false;
 
         TrackUpdate(
             updatedBy,
             updatedAtUtc);
+    }
+
+    private void ValidateUpdatedBy(string updatedBy)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(updatedBy);
     }
 
     #endregion

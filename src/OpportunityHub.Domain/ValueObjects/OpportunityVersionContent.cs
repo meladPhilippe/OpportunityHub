@@ -36,8 +36,6 @@ public sealed class OpportunityVersionContent
 
     public string? ProductOwnerPhone { get; init; }
 
-    public LocalizedText? ProductOwnerPageUrl { get; init; }
-
     public IReadOnlyCollection<Guid> ChannelIds { get; init; } = [];
 
     public IReadOnlyCollection<Guid> SectorIds { get; init; } = [];

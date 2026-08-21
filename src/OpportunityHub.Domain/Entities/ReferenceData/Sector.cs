@@ -49,7 +49,19 @@ public sealed class Sector : ChangeTrackedEntity
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentException.ThrowIfNullOrWhiteSpace(createdBy);
+        if (code <= 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(code),
+                "Sector code must be greater than zero.");
+        }
 
+        if (sortOrder < 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(sortOrder),
+                "Sort order cannot be negative.");
+        }
         return new Sector(
             code,
             name,
@@ -66,6 +78,7 @@ public sealed class Sector : ChangeTrackedEntity
         string updatedBy,
         DateTime? updatedAtUtc = null)
     {
+        ValidateUpdatedBy(updatedBy);
         IsActive = true;
 
         TrackUpdate(
@@ -77,11 +90,18 @@ public sealed class Sector : ChangeTrackedEntity
         string updatedBy,
         DateTime? updatedAtUtc = null)
     {
+        ValidateUpdatedBy(updatedBy);
+
         IsActive = false;
 
         TrackUpdate(
             updatedBy,
             updatedAtUtc);
+    }
+
+    private static void ValidateUpdatedBy(string updatedBy)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(updatedBy);
     }
 
     #endregion
