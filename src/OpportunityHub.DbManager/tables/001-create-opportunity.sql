@@ -37,6 +37,12 @@ CREATE TABLE dbo.Opportunity
 
     CONSTRAINT CK_Opportunity_LastActivitySequenceNumber
         CHECK (LastActivitySequenceNumber >= 0)
-);
+    );
+
+CREATE INDEX IX_Opportunity_StatusCode
+    ON dbo.Opportunity (StatusCode);
+
+CREATE INDEX IX_Opportunity_IsActive
+    ON dbo.Opportunity (IsActive);
 
 --rollback DROP TABLE dbo.Opportunity;

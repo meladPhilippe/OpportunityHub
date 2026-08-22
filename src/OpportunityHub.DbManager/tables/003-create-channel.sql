@@ -38,4 +38,7 @@ CREATE TABLE dbo.Channel
         CHECK (SortOrder >= 0)
 );
 
+CREATE INDEX IX_Channel_IsActive_SortOrder
+    ON dbo.Channel (IsActive, SortOrder);
+
 --rollback DROP TABLE dbo.Channel;

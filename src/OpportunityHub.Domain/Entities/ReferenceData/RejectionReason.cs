@@ -1,53 +1,102 @@
+using OpportunityHub.Domain.ValueObjects;
+
 namespace OpportunityHub.Domain.Entities;
 
-public sealed class RejectionReason : EntityIdentity
+/// <summary>
+/// Represents a reference-data rejection reason that can be
+/// associated with a final rejection.
+/// </summary>
+public sealed class RejectionReason : ChangeTrackedEntity
 {
-    private RejectionReason()
-    {
-    }
-
-    public RejectionReason(
+    private RejectionReason(
         string code,
-        string name,
-        int displayOrder)
+        LocalizedText name,
+        int sortOrder,
+        string createdBy,
+        DateTime createdAtUtc)
+        : base(createdBy, createdAtUtc)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(code);
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-
-        if (displayOrder < 0)
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(displayOrder));
-        }
-
         Code = code;
         Name = name;
-        DisplayOrder = displayOrder;
+        SortOrder = sortOrder;
         IsActive = true;
+    }
+
+    private RejectionReason()
+    {
     }
 
     #region Properties
 
     public string Code { get; private set; } = string.Empty;
 
-    public string Name { get; private set; } = string.Empty;
+    public LocalizedText Name { get; private set; } = null!;
+
+    public int SortOrder { get; private set; }
 
     public bool IsActive { get; private set; }
 
-    public int DisplayOrder { get; private set; }
+    #endregion
+
+    #region Factory
+
+    public static RejectionReason Create(
+        string code,
+        LocalizedText name,
+        int sortOrder,
+        string createdBy,
+        DateTime? createdAtUtc = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(code);
+        ArgumentNullException.ThrowIfNull(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(createdBy);
+
+        if (sortOrder < 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(sortOrder),
+                "Sort order cannot be negative.");
+        }
+
+        return new RejectionReason(
+            code,
+            name,
+            sortOrder,
+            createdBy,
+            createdAtUtc ?? DateTime.UtcNow);
+    }
 
     #endregion
 
     #region State
 
-    public void Activate()
+    public void Activate(
+        string updatedBy,
+        DateTime? updatedAtUtc = null)
     {
+        ValidateUpdatedBy(updatedBy);
         IsActive = true;
+
+        TrackUpdate(
+            updatedBy,
+            updatedAtUtc);
     }
 
-    public void Deactivate()
+    public void Deactivate(
+        string updatedBy,
+        DateTime? updatedAtUtc = null)
     {
+        ValidateUpdatedBy(updatedBy);
         IsActive = false;
+
+        TrackUpdate(
+            updatedBy,
+            updatedAtUtc);
+    }
+
+    private static void ValidateUpdatedBy(string updatedBy)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(updatedBy);
     }
 
     #endregion

@@ -36,4 +36,7 @@ CREATE TABLE dbo.RejectionReason
         CHECK (SortOrder >= 0)
 );
 
+CREATE INDEX IX_RejectionReason_IsActive_SortOrder
+    ON dbo.RejectionReason (IsActive, SortOrder);
+
 --rollback DROP TABLE dbo.RejectionReason;

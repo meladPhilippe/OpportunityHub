@@ -28,7 +28,7 @@ public sealed class OpportunityVersionConfiguration
             x.OpportunityId,
             x.Id
         })
-        .HasName("AK_OpportunityVersion_OpportunityId_Id");
+        .HasName("UQ_OpportunityVersion_Opportunity_Id");
 
         #endregion
 
@@ -121,10 +121,12 @@ public sealed class OpportunityVersionConfiguration
             {
                 value.Property(x => x.En)
                     .HasColumnName("WebsiteUrlEn")
+                    .HasMaxLength(2000)
                     .IsRequired(false);
 
                 value.Property(x => x.Ar)
                     .HasColumnName("WebsiteUrlAr")
+                    .HasMaxLength(2000)
                     .IsRequired(false);
             });
 
@@ -138,10 +140,12 @@ public sealed class OpportunityVersionConfiguration
             {
                 value.Property(x => x.En)
                     .HasColumnName("LogoReferenceEn")
+                    .HasMaxLength(2000)
                     .IsRequired(false);
 
                 value.Property(x => x.Ar)
                     .HasColumnName("LogoReferenceAr")
+                    .HasMaxLength(2000)
                     .IsRequired(false);
             });
 
@@ -155,10 +159,12 @@ public sealed class OpportunityVersionConfiguration
             {
                 value.Property(x => x.En)
                     .HasColumnName("BannerReferenceEn")
+                    .HasMaxLength(2000)
                     .IsRequired(false);
 
                 value.Property(x => x.Ar)
                     .HasColumnName("BannerReferenceAr")
+                    .HasMaxLength(2000)
                     .IsRequired(false);
             });
 
@@ -189,10 +195,12 @@ public sealed class OpportunityVersionConfiguration
             {
                 value.Property(x => x.En)
                     .HasColumnName("CompanyWebsiteUrlEn")
+                    .HasMaxLength(2000)
                     .IsRequired(false);
 
                 value.Property(x => x.Ar)
                     .HasColumnName("CompanyWebsiteUrlAr")
+                    .HasMaxLength(2000)
                     .IsRequired(false);
             });
 

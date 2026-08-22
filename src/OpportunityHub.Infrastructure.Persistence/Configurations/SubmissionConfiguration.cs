@@ -92,7 +92,7 @@ public sealed class SubmissionConfiguration
             nameof(Submission.SequenceNumber))
             .IsUnique()
             .HasDatabaseName(
-                "UQ_Submission_Version_Sequence");
+                "UQ_Submission_OpportunityVersion_SequenceNumber");
 
         #endregion
     }

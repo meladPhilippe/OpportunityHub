@@ -1,11 +1,25 @@
 using OpportunityHub.Domain.Entities;
+using OpportunityHub.Domain.ValueObjects;
+
 namespace OpportunityHub.Domain.Tests.Entities;
 
 public sealed class RejectionReasonTests
 {
     private const string Code = "INVALID_DATA";
-    private const string Name = "Invalid data";
-    private const int DisplayOrder = 1;
+    private const int SortOrder = 1;
+
+    private const string CreatedBy = "user-1";
+    private const string UpdatedBy = "user-2";
+
+    private static readonly DateTime CreatedAtUtc =
+        new(
+            2026,
+            8,
+            21,
+            10,
+            0,
+            0,
+            DateTimeKind.Utc);
 
     #region Creation
 
@@ -16,11 +30,16 @@ public sealed class RejectionReasonTests
     [Fact]
     public void Create_ShouldCreateRejectionReason()
     {
+        // Arrange
+        var name = new LocalizedText("Invalid data");
+
         // Act
-        var rejectionReason = new RejectionReason(
+        var rejectionReason = RejectionReason.Create(
             Code,
-            Name,
-            DisplayOrder);
+            name,
+            SortOrder,
+            CreatedBy,
+            CreatedAtUtc);
 
         // Assert
         Assert.NotEqual(
@@ -31,16 +50,24 @@ public sealed class RejectionReasonTests
             Code,
             rejectionReason.Code);
 
-        Assert.Equal(
-            Name,
+        Assert.Same(
+            name,
             rejectionReason.Name);
 
         Assert.Equal(
-            DisplayOrder,
-            rejectionReason.DisplayOrder);
+            SortOrder,
+            rejectionReason.SortOrder);
 
         Assert.True(
             rejectionReason.IsActive);
+
+        Assert.Equal(
+            CreatedBy,
+            rejectionReason.CreatedBy);
+
+        Assert.Equal(
+            CreatedAtUtc,
+            rejectionReason.CreatedAtUtc);
     }
 
     /// <summary>
@@ -70,10 +97,12 @@ public sealed class RejectionReasonTests
     {
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() =>
-            new RejectionReason(
+            RejectionReason.Create(
                 string.Empty,
-                Name,
-                DisplayOrder));
+                new LocalizedText("Invalid data"),
+                SortOrder,
+                CreatedBy,
+                CreatedAtUtc));
 
         Assert.Equal(
             "code",
@@ -88,10 +117,12 @@ public sealed class RejectionReasonTests
     {
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() =>
-            new RejectionReason(
+            RejectionReason.Create(
                 "   ",
-                Name,
-                DisplayOrder));
+                new LocalizedText("Invalid data"),
+                SortOrder,
+                CreatedBy,
+                CreatedAtUtc));
 
         Assert.Equal(
             "code",
@@ -106,49 +137,15 @@ public sealed class RejectionReasonTests
     {
         // Act & Assert
         var exception = Assert.Throws<ArgumentNullException>(() =>
-            new RejectionReason(
+            RejectionReason.Create(
                 null!,
-                Name,
-                DisplayOrder));
+                new LocalizedText("Invalid data"),
+                SortOrder,
+                CreatedBy,
+                CreatedAtUtc));
 
         Assert.Equal(
             "code",
-            exception.ParamName);
-    }
-
-    /// <summary>
-    /// Verifies that creation rejects an empty name.
-    /// </summary>
-    [Fact]
-    public void Create_ShouldRejectEmptyName()
-    {
-        // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(() =>
-            new RejectionReason(
-                Code,
-                string.Empty,
-                DisplayOrder));
-
-        Assert.Equal(
-            "name",
-            exception.ParamName);
-    }
-
-    /// <summary>
-    /// Verifies that creation rejects a whitespace name.
-    /// </summary>
-    [Fact]
-    public void Create_ShouldRejectWhitespaceName()
-    {
-        // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(() =>
-            new RejectionReason(
-                Code,
-                "   ",
-                DisplayOrder));
-
-        Assert.Equal(
-            "name",
             exception.ParamName);
     }
 
@@ -160,10 +157,12 @@ public sealed class RejectionReasonTests
     {
         // Act & Assert
         var exception = Assert.Throws<ArgumentNullException>(() =>
-            new RejectionReason(
+            RejectionReason.Create(
                 Code,
                 null!,
-                DisplayOrder));
+                SortOrder,
+                CreatedBy,
+                CreatedAtUtc));
 
         Assert.Equal(
             "name",
@@ -171,43 +170,63 @@ public sealed class RejectionReasonTests
     }
 
     /// <summary>
-    /// Verifies that creation rejects a negative display order.
+    /// Verifies that creation rejects a negative sort order.
     /// </summary>
     [Fact]
-    public void Create_ShouldRejectNegativeDisplayOrder()
+    public void Create_ShouldRejectNegativeSortOrder()
     {
         // Act & Assert
         var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
-            new RejectionReason(
+            RejectionReason.Create(
                 Code,
-                Name,
-                -1));
-
-        Assert.StartsWith(
-            "Specified argument was out of the range",
-            exception.Message);
+                new LocalizedText("Invalid data"),
+                -1,
+                CreatedBy,
+                CreatedAtUtc));
 
         Assert.Equal(
-            "displayOrder",
+            "sortOrder",
             exception.ParamName);
     }
 
     /// <summary>
-    /// Verifies that zero is accepted as a valid display order.
+    /// Verifies that creation rejects an empty creator.
     /// </summary>
     [Fact]
-    public void Create_ShouldAllowZeroDisplayOrder()
+    public void Create_ShouldRejectEmptyCreatedBy()
+    {
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentException>(() =>
+            RejectionReason.Create(
+                Code,
+                new LocalizedText("Invalid data"),
+                SortOrder,
+                string.Empty,
+                CreatedAtUtc));
+
+        Assert.Equal(
+            "createdBy",
+            exception.ParamName);
+    }
+
+    /// <summary>
+    /// Verifies that zero is accepted as a valid sort order.
+    /// </summary>
+    [Fact]
+    public void Create_ShouldAllowZeroSortOrder()
     {
         // Act
-        var rejectionReason = new RejectionReason(
+        var rejectionReason = RejectionReason.Create(
             Code,
-            Name,
-            0);
+            new LocalizedText("Invalid data"),
+            0,
+            CreatedBy,
+            CreatedAtUtc);
 
         // Assert
         Assert.Equal(
             0,
-            rejectionReason.DisplayOrder);
+            rejectionReason.SortOrder);
     }
 
     #endregion
@@ -224,10 +243,10 @@ public sealed class RejectionReasonTests
         // Arrange
         var rejectionReason = CreateRejectionReason();
 
-        rejectionReason.Deactivate();
+        rejectionReason.Deactivate(UpdatedBy);
 
         // Act
-        rejectionReason.Activate();
+        rejectionReason.Activate(UpdatedBy);
 
         // Assert
         Assert.True(
@@ -245,7 +264,7 @@ public sealed class RejectionReasonTests
         var rejectionReason = CreateRejectionReason();
 
         // Act
-        rejectionReason.Activate();
+        rejectionReason.Activate(UpdatedBy);
 
         // Assert
         Assert.True(
@@ -267,7 +286,7 @@ public sealed class RejectionReasonTests
         var rejectionReason = CreateRejectionReason();
 
         // Act
-        rejectionReason.Deactivate();
+        rejectionReason.Deactivate(UpdatedBy);
 
         // Assert
         Assert.False(
@@ -284,10 +303,10 @@ public sealed class RejectionReasonTests
         // Arrange
         var rejectionReason = CreateRejectionReason();
 
-        rejectionReason.Deactivate();
+        rejectionReason.Deactivate(UpdatedBy);
 
         // Act
-        rejectionReason.Deactivate();
+        rejectionReason.Deactivate(UpdatedBy);
 
         // Assert
         Assert.False(
@@ -309,14 +328,14 @@ public sealed class RejectionReasonTests
         var rejectionReason = CreateRejectionReason();
 
         // Act
-        rejectionReason.Deactivate();
+        rejectionReason.Deactivate(UpdatedBy);
 
         // Assert
         Assert.False(
             rejectionReason.IsActive);
 
         // Act
-        rejectionReason.Activate();
+        rejectionReason.Activate(UpdatedBy);
 
         // Assert
         Assert.True(
@@ -329,11 +348,14 @@ public sealed class RejectionReasonTests
 
     private static RejectionReason CreateRejectionReason()
     {
-        return new RejectionReason(
+        return RejectionReason.Create(
             Code,
-            Name,
-            DisplayOrder);
+            new LocalizedText("Invalid data"),
+            SortOrder,
+            CreatedBy,
+            CreatedAtUtc);
     }
 
     #endregion
 }
+

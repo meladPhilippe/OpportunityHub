@@ -92,4 +92,12 @@ CREATE TABLE dbo.OpportunityVersion
         CHECK (VersionNumber > 0)
 );
 
+CREATE UNIQUE INDEX UX_OpportunityVersion_Current
+    ON dbo.OpportunityVersion (OpportunityId)
+    WHERE IsCurrent = 1;
+
+CREATE UNIQUE INDEX UX_OpportunityVersion_Published
+    ON dbo.OpportunityVersion (OpportunityId)
+    WHERE IsPublishedSnapshot = 1;
+
 --rollback DROP TABLE dbo.OpportunityVersion;

@@ -38,4 +38,7 @@ CREATE TABLE dbo.Sector
         CHECK (SortOrder >= 0)
 );
 
+CREATE INDEX IX_Sector_IsActive_SortOrder
+    ON dbo.Sector (IsActive, SortOrder);
+
 --rollback DROP TABLE dbo.Sector;

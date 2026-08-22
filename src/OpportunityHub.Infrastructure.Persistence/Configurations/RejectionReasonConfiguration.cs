@@ -27,26 +27,66 @@ public sealed class RejectionReasonConfiguration
             .HasMaxLength(100)
             .IsRequired();
 
-        builder.Property(x => x.Name)
-            .HasMaxLength(500)
+        builder.Property(x => x.SortOrder)
             .IsRequired();
 
         builder.Property(x => x.IsActive)
             .IsRequired();
 
-        builder.Property(x => x.DisplayOrder)
-            .IsRequired();
+        #endregion
+
+        #region Name
+
+        builder.OwnsOne(
+            x => x.Name,
+            name =>
+            {
+                name.Property(x => x.En)
+                    .HasColumnName("NameEn")
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                name.Property(x => x.Ar)
+                    .HasColumnName("NameAr")
+                    .HasMaxLength(500)
+                    .IsRequired(false);
+            });
 
         #endregion
 
-        #region Indexes 
+        #region Change Tracking
+
+        builder.Property(x => x.CreatedAtUtc)
+            .IsRequired();
+
+        builder.Property(x => x.CreatedBy)
+            .HasMaxLength(256)
+            .IsRequired();
+
+        builder.Property(x => x.UpdatedAtUtc)
+            .IsRequired(false);
+
+        builder.Property(x => x.UpdatedBy)
+            .HasMaxLength(256)
+            .IsRequired(false);
+
+        #endregion
+
+        #region Indexes
 
         builder.HasIndex(x => x.Code)
-                .IsUnique()
-                .HasDatabaseName("UQ_RejectionReason_Code");
+            .IsUnique()
+            .HasDatabaseName("UQ_RejectionReason_Code");
 
-        builder.HasIndex(x => new { x.IsActive, x.DisplayOrder })
-                .HasDatabaseName("IX_RejectionReason_IsActive_DisplayOrder");
+        builder.HasIndex(
+            x => new
+            {
+                x.IsActive,
+                x.SortOrder
+            })
+            .HasDatabaseName(
+                "IX_RejectionReason_IsActive_SortOrder");
+
         #endregion
     }
 }
