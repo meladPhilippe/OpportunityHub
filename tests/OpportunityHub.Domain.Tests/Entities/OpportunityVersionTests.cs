@@ -153,10 +153,10 @@ public sealed class OpportunityVersionTests
 
     /// <summary>
     /// Verifies that creating an initial version fails when
-    /// the product name is not provided.
+    /// the Opportunity name is not provided.
     /// </summary>
     [Fact]
-    public void CreateInitial_ShouldRejectMissingProductName()
+    public void CreateInitial_ShouldRejectMissingOpportunityName()
     {
         // Arrange
         var content = new OpportunityVersionContent
@@ -177,7 +177,7 @@ public sealed class OpportunityVersionTests
                 CreatedAtUtc));
 
         Assert.Equal(
-            "Product name is required.",
+            "Opportunity name is required.",
             exception.Message);
     }
 
@@ -194,7 +194,7 @@ public sealed class OpportunityVersionTests
     {
         // Arrange
         var version = CreateVersion();
-        var content = CreateContent("Updated Product");
+        var content = CreateContent("Updated Opportunity");
 
         // Act
         version.ApplyContent(
@@ -249,11 +249,11 @@ public sealed class OpportunityVersionTests
     }
 
     /// <summary>
-    /// Verifies that applying content fails when the product name
+    /// Verifies that applying content fails when the Opportunity name
     /// is not provided.
     /// </summary>
     [Fact]
-    public void ApplyContent_ShouldRejectMissingProductName()
+    public void ApplyContent_ShouldRejectMissingOpportunityName()
     {
         // Arrange
         var version = CreateVersion();
@@ -268,7 +268,7 @@ public sealed class OpportunityVersionTests
                 UpdatedAtUtc));
 
         Assert.Equal(
-            "Product name is required.",
+            "Opportunity name is required.",
             exception.Message);
     }
 
@@ -283,7 +283,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             Features =
             [
                 null!
@@ -309,7 +309,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             KeyAchievements =
             [
                 null!
@@ -335,7 +335,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             Kpis =
             [
                 null!
@@ -368,7 +368,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Updated Product"),
+            OpportunityName = new LocalizedText("Updated Opportunity"),
             ChannelIds = [],
             SectorIds = [],
             Features = [],
@@ -406,7 +406,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             ChannelIds =
             [
                 ChannelId,
@@ -443,7 +443,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             ChannelIds =
             [
                 Guid.Empty,
@@ -477,7 +477,7 @@ public sealed class OpportunityVersionTests
 
         var firstContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             ChannelIds = [ChannelId]
         };
 
@@ -490,7 +490,7 @@ public sealed class OpportunityVersionTests
 
         var secondContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             ChannelIds = [secondChannelId]
         };
 
@@ -524,7 +524,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             SectorIds =
             [
                 SectorId,
@@ -561,7 +561,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             SectorIds =
             [
                 Guid.Empty,
@@ -595,7 +595,7 @@ public sealed class OpportunityVersionTests
 
         var firstContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             SectorIds = [SectorId]
         };
 
@@ -608,7 +608,7 @@ public sealed class OpportunityVersionTests
 
         var secondContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             SectorIds = [secondSectorId]
         };
 
@@ -642,7 +642,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             Features =
             [
                 new FeatureContent
@@ -710,7 +710,7 @@ public sealed class OpportunityVersionTests
 
         var firstContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             Features =
             [
                 new FeatureContent
@@ -728,7 +728,7 @@ public sealed class OpportunityVersionTests
 
         var secondContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             Features =
             [
                 new FeatureContent
@@ -769,7 +769,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             KeyAchievements =
             [
                 new KeyAchievementContent
@@ -831,7 +831,7 @@ public sealed class OpportunityVersionTests
 
         var firstContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             KeyAchievements =
             [
                 new KeyAchievementContent
@@ -849,7 +849,7 @@ public sealed class OpportunityVersionTests
 
         var secondContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             KeyAchievements =
             [
                 new KeyAchievementContent
@@ -890,7 +890,7 @@ public sealed class OpportunityVersionTests
 
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             Kpis =
             [
                 new KpiContent
@@ -935,7 +935,7 @@ public sealed class OpportunityVersionTests
 
         var firstContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             Kpis =
             [
                 new KpiContent
@@ -954,7 +954,7 @@ public sealed class OpportunityVersionTests
 
         var secondContent = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Product"),
+            OpportunityName = new LocalizedText("Opportunity"),
             Kpis =
             [
                 new KpiContent
@@ -1232,7 +1232,7 @@ public sealed class OpportunityVersionTests
         // Act
         var content = new OpportunityVersionContent
         {
-            ProductName = new LocalizedText("Changed"),
+            OpportunityName = new LocalizedText("Changed"),
             ChannelIds = [Guid.NewGuid()],
             SectorIds = [Guid.NewGuid()],
             Features =
@@ -1265,8 +1265,8 @@ public sealed class OpportunityVersionTests
 
         // Assert
         Assert.Equal(
-            "Product",
-            version.ProductName.En);
+            "Opportunity",
+            version.OpportunityName.En);
 
         Assert.Single(version.Channels);
         Assert.Single(version.Sectors);
@@ -1276,7 +1276,7 @@ public sealed class OpportunityVersionTests
 
         Assert.Equal(
             "Changed",
-            clone.ProductName.En);
+            clone.OpportunityName.En);
     }
 
     #endregion
@@ -1405,13 +1405,13 @@ public sealed class OpportunityVersionTests
     }
 
     private static OpportunityVersionContent CreateContent(
-        string productName = "Product")
+        string OpportunityName = "Opportunity")
     {
         return new OpportunityVersionContent
         {
-            ProductName =
+            OpportunityName =
                 new LocalizedText(
-                    productName,
+                    OpportunityName,
                     "المنتج"),
 
             NationalImpact =
@@ -1421,7 +1421,7 @@ public sealed class OpportunityVersionTests
 
             Description =
                 new LocalizedText(
-                    "Product description",
+                    "Opportunity description",
                     "وصف المنتج"),
 
             WebsiteUrl =
@@ -1455,14 +1455,14 @@ public sealed class OpportunityVersionTests
 
             KsaAdoptingEntitiesCount = 5,
 
-            ProductOwnerName =
+            OpportunityOwnerName =
                 new LocalizedText(
-                    "Product Owner"),
+                    "Opportunity Owner"),
 
-            ProductOwnerEmail =
+            OpportunityOwnerEmail =
                 "owner@example.com",
 
-            ProductOwnerPhone =
+            OpportunityOwnerPhone =
                 "+966500000000",
 
             ChannelIds =
@@ -1533,12 +1533,12 @@ public sealed class OpportunityVersionTests
         OpportunityVersionContent content)
     {
         Assert.Equal(
-            content.ProductName.En,
-            version.ProductName.En);
+            content.OpportunityName.En,
+            version.OpportunityName.En);
 
         Assert.Equal(
-            content.ProductName.Ar,
-            version.ProductName.Ar);
+            content.OpportunityName.Ar,
+            version.OpportunityName.Ar);
 
         Assert.Equal(
             content.NationalImpact?.En,
@@ -1581,16 +1581,16 @@ public sealed class OpportunityVersionTests
             version.KsaAdoptingEntitiesCount);
 
         Assert.Equal(
-            content.ProductOwnerName?.En,
-            version.ProductOwnerName?.En);
+            content.OpportunityOwnerName?.En,
+            version.OpportunityOwnerName?.En);
 
         Assert.Equal(
-            content.ProductOwnerEmail,
-            version.ProductOwnerEmail);
+            content.OpportunityOwnerEmail,
+            version.OpportunityOwnerEmail);
 
         Assert.Equal(
-            content.ProductOwnerPhone,
-            version.ProductOwnerPhone);
+            content.OpportunityOwnerPhone,
+            version.OpportunityOwnerPhone);
 
         Assert.Equal(
             content.ChannelIds.Count,

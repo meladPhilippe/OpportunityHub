@@ -10,7 +10,7 @@ namespace OpportunityHub.Domain.Entities.Submissions;
 public sealed class Submission : EntityIdentity
 {
     private Submission(
-        Guid productVersionId,
+        Guid opportunityVersionId,
         long sequenceNumber,
         SubmissionType submissionType,
         string? editSummary,
@@ -19,7 +19,7 @@ public sealed class Submission : EntityIdentity
         string submittedBy,
         DateTime submittedAtUtc)
     {
-        ProductVersionId = productVersionId;
+        OpportunityVersionId = opportunityVersionId;
         SequenceNumber = sequenceNumber;
         SubmissionType = submissionType;
         EditSummary = editSummary;
@@ -31,7 +31,7 @@ public sealed class Submission : EntityIdentity
 
     #region Properties
 
-    public Guid ProductVersionId { get; private set; }
+    public Guid OpportunityVersionId { get; private set; }
 
     public long SequenceNumber { get; private set; }
 
@@ -58,7 +58,7 @@ public sealed class Submission : EntityIdentity
     #region Factory
 
     public static Submission Create(
-        Guid productVersionId,
+        Guid opportunityVersionId,
         long sequenceNumber,
         SubmissionType submissionType,
         string? editSummary,
@@ -70,7 +70,7 @@ public sealed class Submission : EntityIdentity
         ArgumentException.ThrowIfNullOrWhiteSpace(submittedBy);
         ValidateEditSummary(submissionType, editSummary);
         return new Submission(
-            productVersionId,
+            opportunityVersionId,
             sequenceNumber,
             submissionType,
             editSummary,

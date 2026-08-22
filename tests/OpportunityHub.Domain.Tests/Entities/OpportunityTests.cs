@@ -97,12 +97,12 @@ public sealed class OpportunityTests
         Assert.False(version.IsPublishedSnapshot);
 
         Assert.Equal(
-            content.ProductName.En,
-            version.ProductName.En);
+            content.OpportunityName.En,
+            version.OpportunityName.En);
 
         Assert.Equal(
-            content.ProductName.Ar,
-            version.ProductName.Ar);
+            content.OpportunityName.Ar,
+            version.OpportunityName.Ar);
     }
 
     /// <summary>
@@ -388,7 +388,7 @@ public sealed class OpportunityTests
         var items =
             new[]
             {
-                ("ProductName", "Please update the product name.")
+                ("OpportunityName", "Please update the Opportunity name.")
             };
 
         // Act
@@ -414,11 +414,11 @@ public sealed class OpportunityTests
             submission.ModificationRequest.Items.Single();
 
         Assert.Equal(
-            "ProductName",
+            "OpportunityName",
             item.FieldName);
 
         Assert.Equal(
-            "Please update the product name.",
+            "Please update the Opportunity name.",
             item.Comment);
     }
 
@@ -439,7 +439,7 @@ public sealed class OpportunityTests
         opportunity.RequestModification(
             new[]
             {
-                ("ProductName", "Please update the name.")
+                ("OpportunityName", "Please update the name.")
             },
             "manager",
             UpdatedAtUtc);
@@ -490,14 +490,14 @@ public sealed class OpportunityTests
         opportunity.RequestModification(
             new[]
             {
-                ("ProductName", "Please update the name.")
+                ("OpportunityName", "Please update the name.")
             },
             "manager",
             UpdatedAtUtc);
 
         // Act
         var submission = opportunity.SubmitForManagerReview(
-            CreateContent("Updated Product"),
+            CreateContent("Updated Opportunity"),
             "specialist",
             submittedAtUtc: PublishedAtUtc);
 
@@ -832,13 +832,13 @@ public sealed class OpportunityTests
             opportunity.GetCurrentVersion();
 
         var newContent =
-            CreateContent("Modified Product");
+            CreateContent("Modified Opportunity");
 
         // Act
         var submission = opportunity.SubmitForManagerReview(
             newContent,
             "specialist",
-            "Update published product.",
+            "Update published Opportunity.",
             UpdatedAtUtc);
 
         // Assert
@@ -876,12 +876,12 @@ public sealed class OpportunityTests
         Assert.True(publishedVersion.IsPublishedSnapshot);
 
         Assert.Equal(
-            "Modified Product",
-            currentVersion.ProductName.En);
+            "Modified Opportunity",
+            currentVersion.OpportunityName.En);
 
         Assert.Equal(
-            "Product",
-            publishedVersion.ProductName.En);
+            "Opportunity",
+            publishedVersion.OpportunityName.En);
     }
 
     /// <summary>
@@ -905,9 +905,9 @@ public sealed class OpportunityTests
 
         // Act
         opportunity.SubmitForManagerReview(
-            CreateContent("Modified Product"),
+            CreateContent("Modified Opportunity"),
             "specialist",
-            "Update product.",
+            "Update Opportunity.",
             UpdatedAtUtc);
 
         // Assert
@@ -926,8 +926,8 @@ public sealed class OpportunityTests
             preservedVersion.PublishedAtUtc);
 
         Assert.Equal(
-            "Product",
-            preservedVersion.ProductName.En);
+            "Opportunity",
+            preservedVersion.OpportunityName.En);
     }
 
     /// <summary>
@@ -1035,9 +1035,9 @@ public sealed class OpportunityTests
             originalVersion.Id;
 
         opportunity.SubmitForManagerReview(
-            CreateContent("Modified Product"),
+            CreateContent("Modified Opportunity"),
             "specialist",
-            "Update product.",
+            "Update Opportunity.",
             CreatedAtUtc);
 
         var submission =
@@ -1094,9 +1094,9 @@ public sealed class OpportunityTests
             CreatePublishedOpportunity();
 
         opportunity.SubmitForManagerReview(
-            CreateContent("Modified Product"),
+            CreateContent("Modified Opportunity"),
             "specialist",
-            "Update product.",
+            "Update Opportunity.",
             CreatedAtUtc);
 
         var submission =
@@ -1432,7 +1432,7 @@ public sealed class OpportunityTests
         var exception =
             Assert.Throws<WorkflowDomainException>(() =>
                 opportunity.SubmitForManagerReview(
-                    CreateContent("Modified Product"),
+                    CreateContent("Modified Opportunity"),
                     "specialist",
                     null,
                     UpdatedAtUtc));
@@ -1455,14 +1455,14 @@ public sealed class OpportunityTests
         // Act
         var submission =
             opportunity.SubmitForManagerReview(
-                CreateContent("Modified Product"),
+                CreateContent("Modified Opportunity"),
                 "specialist",
-                "   Update product.   ",
+                "   Update Opportunity.   ",
                 UpdatedAtUtc);
 
         // Assert
         Assert.Equal(
-            "Update product.",
+            "Update Opportunity.",
             submission.EditSummary);
     }
 
@@ -1483,7 +1483,7 @@ public sealed class OpportunityTests
         var exception =
             Assert.Throws<WorkflowDomainException>(() =>
                 opportunity.SubmitForManagerReview(
-                    CreateContent("Modified Product"),
+                    CreateContent("Modified Opportunity"),
                     "specialist",
                     editSummary,
                     UpdatedAtUtc));
@@ -1567,24 +1567,24 @@ public sealed class OpportunityTests
             CreatePublishedOpportunity();
 
         opportunity.SubmitForManagerReview(
-            CreateContent("Modified Product"),
+            CreateContent("Modified Opportunity"),
             "specialist",
-            "Update published product.",
+            "Update published Opportunity.",
             UpdatedAtUtc);
 
         return opportunity;
     }
 
     private static OpportunityVersionContent CreateContent(
-        string productName = "Product",
+        string OpportunityName = "Opportunity",
         IReadOnlyCollection<Guid>? channelIds = null,
         IReadOnlyCollection<Guid>? sectorIds = null)
     {
         return new OpportunityVersionContent
         {
-            ProductName =
+            OpportunityName =
                 new LocalizedText(
-                    productName,
+                    OpportunityName,
                     "المنتج"),
 
             NationalImpact =
@@ -1594,7 +1594,7 @@ public sealed class OpportunityTests
 
             Description =
                 new LocalizedText(
-                    "Product description",
+                    "Opportunity description",
                     "وصف المنتج"),
 
             CompanyName =
@@ -1602,15 +1602,15 @@ public sealed class OpportunityTests
                     "Company",
                     "الشركة"),
 
-            ProductOwnerName =
+            OpportunityOwnerName =
                 new LocalizedText(
-                    "Product Owner",
+                    "Opportunity Owner",
                     "مالك المنتج"),
 
-            ProductOwnerEmail =
+            OpportunityOwnerEmail =
                 "owner@example.com",
 
-            ProductOwnerPhone =
+            OpportunityOwnerPhone =
                 "+201000000000",
 
             ChannelIds =

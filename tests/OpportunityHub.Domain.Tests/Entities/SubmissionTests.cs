@@ -5,7 +5,7 @@ namespace OpportunityHub.Domain.Tests.Entities;
 
 public sealed class SubmissionTests
 {
-    private static readonly Guid ProductVersionId =
+    private static readonly Guid OpportunityVersionId =
         Guid.Parse("11111111-1111-1111-1111-111111111111");
 
     private const string SubmittedBy = "user-1";
@@ -33,7 +33,7 @@ public sealed class SubmissionTests
 
         // Act
         var submission = Submission.Create(
-            ProductVersionId,
+            OpportunityVersionId,
             sequenceNumber,
             SubmissionType.FirstPublication,
             null,
@@ -44,7 +44,7 @@ public sealed class SubmissionTests
 
         // Assert
         Assert.NotEqual(Guid.Empty, submission.Id);
-        Assert.Equal(ProductVersionId, submission.ProductVersionId);
+        Assert.Equal(OpportunityVersionId, submission.OpportunityVersionId);
         Assert.Equal(sequenceNumber, submission.SequenceNumber);
 
         Assert.Equal(
@@ -76,11 +76,11 @@ public sealed class SubmissionTests
     public void Create_ShouldStoreEditSummary_ForNonFirstPublication()
     {
         // Arrange
-        const string editSummary = "Updated product information.";
+        const string editSummary = "Updated Opportunity information.";
 
         // Act
         var submission = Submission.Create(
-            ProductVersionId,
+            OpportunityVersionId,
             1,
             SubmissionType.PublishedModification,
             editSummary,
@@ -106,7 +106,7 @@ public sealed class SubmissionTests
 
         // Act
         var submission = Submission.Create(
-            ProductVersionId,
+            OpportunityVersionId,
             1,
             SubmissionType.FirstPublication,
             null,
@@ -132,7 +132,7 @@ public sealed class SubmissionTests
         // Act & Assert
         Assert.Throws<ArgumentException>(() =>
             Submission.Create(
-                ProductVersionId,
+                OpportunityVersionId,
                 1,
                 SubmissionType.FirstPublication,
                 null,
@@ -150,7 +150,7 @@ public sealed class SubmissionTests
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() =>
             Submission.Create(
-                ProductVersionId,
+                OpportunityVersionId,
                 1,
                 SubmissionType.FirstPublication,
                 "Some edit summary",
@@ -172,7 +172,7 @@ public sealed class SubmissionTests
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() =>
             Submission.Create(
-                ProductVersionId,
+                OpportunityVersionId,
                 1,
                 SubmissionType.PublishedModification,
                 null,
@@ -194,7 +194,7 @@ public sealed class SubmissionTests
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() =>
             Submission.Create(
-                ProductVersionId,
+                OpportunityVersionId,
                 1,
                 SubmissionType.ApprovedModification,
                 null,
@@ -216,7 +216,7 @@ public sealed class SubmissionTests
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() =>
             Submission.Create(
-                ProductVersionId,
+                OpportunityVersionId,
                 1,
                 SubmissionType.ManagerDirectEdit,
                 null,
@@ -239,7 +239,7 @@ public sealed class SubmissionTests
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() =>
             Submission.Create(
-                ProductVersionId,
+                OpportunityVersionId,
                 1,
                 SubmissionType.PublishedModification,
                 "   ",
@@ -269,7 +269,7 @@ public sealed class SubmissionTests
 
         var items = new[]
         {
-            ("ProductName", "Please update the product name."),
+            ("OpportunityName", "Please update the Opportunity name."),
             ("Description", "Please provide a more detailed description.")
         };
 
@@ -304,7 +304,7 @@ public sealed class SubmissionTests
             new[]
             {
                 (
-                    "  ProductName  ",
+                    "  OpportunityName  ",
                     "  Please update the name.  ")
             },
             "manager-1");
@@ -314,7 +314,7 @@ public sealed class SubmissionTests
             submission.ModificationRequest!.Items);
 
         Assert.Equal(
-            "ProductName",
+            "OpportunityName",
             item.FieldName);
 
         Assert.Equal(
@@ -335,8 +335,8 @@ public sealed class SubmissionTests
 
         var items = new[]
         {
-            ("ProductName", "First comment"),
-            (" productname ", "Second comment")
+            ("OpportunityName", "First comment"),
+            (" Opportunityname ", "Second comment")
         };
 
         // Act & Assert
@@ -346,7 +346,7 @@ public sealed class SubmissionTests
                 "manager-1"));
 
         Assert.Equal(
-        "A modification request already exists for field 'ProductName'.",
+        "A modification request already exists for field 'OpportunityName'.",
         exception.Message,
         StringComparer.OrdinalIgnoreCase);
     }
@@ -407,7 +407,7 @@ public sealed class SubmissionTests
             submission.RequestModification(
                 new[]
                 {
-                    ("ProductName", "")
+                    ("OpportunityName", "")
                 },
                 "manager-1"));
     }
@@ -433,7 +433,7 @@ public sealed class SubmissionTests
             submission.RequestModification(
                 new[]
                 {
-                    ("ProductName", "Change it")
+                    ("OpportunityName", "Change it")
                 },
                 "manager-1"));
 
@@ -774,7 +774,7 @@ public sealed class SubmissionTests
         submission.RequestModification(
             new[]
             {
-                ("ProductName", "Change the name.")
+                ("OpportunityName", "Change the name.")
             },
             "manager-1");
 
@@ -804,7 +804,7 @@ public sealed class SubmissionTests
         submission.RequestModification(
             new[]
             {
-                ("ProductName", "Change the name.")
+                ("OpportunityName", "Change the name.")
             },
             "manager-1");
 
@@ -867,7 +867,7 @@ public sealed class SubmissionTests
             submission.RequestModification(
                 new[]
                 {
-                    ("ProductName", "Change it")
+                    ("OpportunityName", "Change it")
                 },
                 "manager-1"));
 
@@ -892,7 +892,7 @@ public sealed class SubmissionTests
                 : "Updated opportunity information.";
 
         return Submission.Create(
-            ProductVersionId,
+            OpportunityVersionId,
             1,
             submissionType,
             editSummary,

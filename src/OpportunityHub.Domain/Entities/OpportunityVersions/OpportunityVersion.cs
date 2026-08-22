@@ -33,7 +33,7 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
 
     #region Content
 
-    public LocalizedText ProductName { get; private set; } = null!;
+    public LocalizedText OpportunityName { get; private set; } = null!;
 
     public LocalizedText? NationalImpact { get; private set; }
 
@@ -55,11 +55,11 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
 
     public int? KsaAdoptingEntitiesCount { get; private set; }
 
-    public LocalizedText? ProductOwnerName { get; private set; }
+    public LocalizedText? OpportunityOwnerName { get; private set; }
 
-    public string? ProductOwnerEmail { get; private set; }
+    public string? OpportunityOwnerEmail { get; private set; }
 
-    public string? ProductOwnerPhone { get; private set; }
+    public string? OpportunityOwnerPhone { get; private set; }
 
     #endregion
 
@@ -165,13 +165,13 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
     private void ApplyContentCore(
         OpportunityVersionContent content)
     {
-        if (content.ProductName is null)
+        if (content.OpportunityName is null)
         {
             throw new InvalidOperationException(
-                "Product name is required.");
+                "Opportunity name is required.");
         }
 
-        ProductName = content.ProductName;
+        OpportunityName = content.OpportunityName;
         NationalImpact = content.NationalImpact;
         Description = content.Description;
         WebsiteUrl = content.WebsiteUrl;
@@ -186,9 +186,9 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
         KsaAdoptingEntitiesCount =
             content.KsaAdoptingEntitiesCount;
 
-        ProductOwnerName = content.ProductOwnerName;
-        ProductOwnerEmail = content.ProductOwnerEmail;
-        ProductOwnerPhone = content.ProductOwnerPhone;
+        OpportunityOwnerName = content.OpportunityOwnerName;
+        OpportunityOwnerEmail = content.OpportunityOwnerEmail;
+        OpportunityOwnerPhone = content.OpportunityOwnerPhone;
         ReplaceChannels(content.ChannelIds);
         ReplaceSectors(content.SectorIds);
         ReplaceFeatures(content.Features);
@@ -321,7 +321,7 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
             createdBy,
             timestamp)
         {
-            ProductName = ProductName,
+            OpportunityName = OpportunityName,
             NationalImpact = NationalImpact,
             Description = Description,
             WebsiteUrl = WebsiteUrl,
@@ -332,9 +332,9 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
             AdoptedBy = AdoptedBy,
             Beneficiaries = Beneficiaries,
             KsaAdoptingEntitiesCount = KsaAdoptingEntitiesCount,
-            ProductOwnerName = ProductOwnerName,
-            ProductOwnerEmail = ProductOwnerEmail,
-            ProductOwnerPhone = ProductOwnerPhone
+            OpportunityOwnerName = OpportunityOwnerName,
+            OpportunityOwnerEmail = OpportunityOwnerEmail,
+            OpportunityOwnerPhone = OpportunityOwnerPhone
         };
 
         foreach (var channel in _channels)
@@ -408,4 +408,4 @@ public sealed class OpportunityVersion : ChangeTrackedEntity
     }
 
     #endregion
-}
+}      

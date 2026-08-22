@@ -530,7 +530,7 @@ public sealed class Opportunity : ChangeTrackedEntity
     /// can occur outside a submission workflow.
     /// </summary>
     private void AddAuditHistory(
-        Guid productVersionId,
+        Guid opportunityVersionId,
         Guid? submissionId,
         WorkflowActivityType activityType,
         string? relatedEntityType,
@@ -540,7 +540,7 @@ public sealed class Opportunity : ChangeTrackedEntity
     {
         var audit = AuditHistory.Create(
             Id,
-            productVersionId,
+            opportunityVersionId,
             submissionId,
             GetNextActivitySequenceNumber(),
             activityType,

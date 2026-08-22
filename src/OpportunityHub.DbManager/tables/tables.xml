@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="001-create-opportunity.sql" relativeToChangelogFile="true"/>
+    <include file="002-create-opportunity-version.sql" relativeToChangelogFile="true"/>
+    <include file="003-create-channel.sql" relativeToChangelogFile="true"/>
+    <include file="004-create-sector.sql" relativeToChangelogFile="true"/>
+    <include file="005-create-opportunity-version-channel.sql" relativeToChangelogFile="true"/>
+    <include file="006-create-opportunity-version-sector.sql" relativeToChangelogFile="true"/>
+    <include file="007-create-opportunity-version-feature.sql" relativeToChangelogFile="true"/>
+    <include file="008-create-opportunity-version-key-achievement.sql" relativeToChangelogFile="true"/>
+    <include file="009-create-opportunity-version-kpi.sql" relativeToChangelogFile="true"/>
+    <include file="010-create-submission.sql"  relativeToChangelogFile="true"/>
+    <include file="011-create-modification-request.sql" relativeToChangelogFile="true"/>
+    <include file="012-create-modification-request-item.sql"relativeToChangelogFile="true"/>
+    <include file="013-create-modification-rejection.sql" relativeToChangelogFile="true"/>
+    <include file="014-create-rejection-reason.sql" relativeToChangelogFile="true"/>
+    <include file="015-create-final-rejection.sql" relativeToChangelogFile="true"/>
+    <include file="016-create-audit-history.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>

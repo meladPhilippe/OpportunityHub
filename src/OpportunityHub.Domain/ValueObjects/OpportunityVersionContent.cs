@@ -8,7 +8,7 @@ public sealed class OpportunityVersionContent
 {
     #region Properties
 
-    public LocalizedText ProductName { get; init; } = null!;
+    public LocalizedText OpportunityName { get; init; } = null!;
 
     public LocalizedText? NationalImpact { get; init; }
 
@@ -30,11 +30,11 @@ public sealed class OpportunityVersionContent
 
     public int? KsaAdoptingEntitiesCount { get; init; }
 
-    public LocalizedText? ProductOwnerName { get; init; }
+    public LocalizedText? OpportunityOwnerName { get; init; }
 
-    public string? ProductOwnerEmail { get; init; }
+    public string? OpportunityOwnerEmail { get; init; }
 
-    public string? ProductOwnerPhone { get; init; }
+    public string? OpportunityOwnerPhone { get; init; }
 
     public IReadOnlyCollection<Guid> ChannelIds { get; init; } = [];
 

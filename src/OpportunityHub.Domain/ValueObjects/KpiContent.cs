@@ -1,37 +1,37 @@
-using OpportunityHub.Domain.Entities;
+    using OpportunityHub.Domain.Entities;
 
-namespace OpportunityHub.Domain.ValueObjects;
+    namespace OpportunityHub.Domain.ValueObjects;
 
-/// <summary>
-/// Represents the content required to create or update
-/// a KPI within an opportunity version.
-/// </summary>
-public sealed class KpiContent
-{
-    #region Properties
-
-    public LocalizedText? Title { get; init; }
-
-    public LocalizedText? Value { get; init; }
-
-    public int SortOrder { get; init; }
-
-    #endregion
-
-    #region Factory
-
-    internal static KpiContent From(
-        OpportunityVersionKpi kpi)
+    /// <summary>
+    /// Represents the content required to create or update
+    /// a KPI within an opportunity version.
+    /// </summary>
+    public sealed class KpiContent
     {
-        ArgumentNullException.ThrowIfNull(kpi);
+        #region Properties
 
-        return new KpiContent
+        public LocalizedText? Title { get; init; }
+
+        public LocalizedText? Value { get; init; }
+
+        public int SortOrder { get; init; }
+
+        #endregion
+
+        #region Factory
+
+        internal static KpiContent From(
+            OpportunityVersionKpi kpi)
         {
-            Title = kpi.Title,
-            Value = kpi.Value,
-            SortOrder = kpi.SortOrder
-        };
-    }
+            ArgumentNullException.ThrowIfNull(kpi);
 
-    #endregion
-}
+            return new KpiContent
+            {
+                Title = kpi.Title,
+                Value = kpi.Value,
+                SortOrder = kpi.SortOrder
+            };
+        }
+
+        #endregion
+    }

@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/OpportunityHub.Domain/OpportunityHub.Domain.csproj" />
+    <Project Path="src/OpportunityHub.Infrastructure.Persistence/OpportunityHub.Infrastructure.Persistence.csproj" />
     <Project Path="tests/OpportunityHub.Domain.Tests/OpportunityHub.Domain.Tests.csproj" />
   </Folder>
 </Solution>
