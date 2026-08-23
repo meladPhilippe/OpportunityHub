@@ -1,0 +1,6 @@
+@OpportunityHub.Api_HostAddress = http://localhost:5101
+
+GET {{OpportunityHub.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

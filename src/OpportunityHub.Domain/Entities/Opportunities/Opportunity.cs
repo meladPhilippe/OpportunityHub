@@ -46,7 +46,7 @@ public sealed class Opportunity : ChangeTrackedEntity
 
     public IReadOnlyCollection<OpportunityVersion> Versions =>
         _versions.AsReadOnly();
-        
+
     public IReadOnlyCollection<Submission> Submissions =>
         _submissions.AsReadOnly();
 
@@ -169,6 +169,27 @@ public sealed class Opportunity : ChangeTrackedEntity
             .FirstOrDefault()
             ?? throw new WorkflowDomainException(
                 "The opportunity does not have a review submission.");
+    }
+
+    /// <summary>
+    /// Finds the submission that started the current modification cycle.
+    /// A new cycle starts when the opportunity was submitted from its
+    /// published state rather than from PublishedUnderReview.
+    /// </summary>
+    private Submission GetCurrentModificationCycleStartSubmission(
+        Submission currentSubmission)
+    {
+        return _submissions
+            .Where(x =>
+                x.SubmissionType == currentSubmission.SubmissionType &&
+                x.SequenceNumber <= currentSubmission.SequenceNumber)
+            .Where(x =>
+                x.PreviousStatusCode !=
+                OpportunityStatusCode.PublishedUnderReview)
+            .OrderByDescending(x => x.SequenceNumber)
+            .FirstOrDefault()
+            ?? throw new WorkflowDomainException(
+                "The current modification cycle start submission could not be found.");
     }
 
     #endregion
@@ -396,8 +417,10 @@ public sealed class Opportunity : ChangeTrackedEntity
             rejectedBy,
             timestamp);
 
+        var submissionStartedTheModificationCycle = GetCurrentModificationCycleStartSubmission(submission);
+
         RestorePreviousStatus(
-            submission,
+            submissionStartedTheModificationCycle,
             rejectedBy,
             timestamp);
 
