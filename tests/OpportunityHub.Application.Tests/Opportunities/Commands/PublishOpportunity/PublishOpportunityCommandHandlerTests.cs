@@ -44,11 +44,10 @@ public sealed class PublishOpportunityCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_WhenOpportunityIsApproved_PublishesOpportunityAndSaves()
+    public async Task Handle_WhenFirstPublicationIsApproved_PublishesOpportunityAndSaves()
     {
         // Arrange
-        var opportunity =
-            OpportunityFactory.CreateApproved();
+        var opportunity = OpportunityFactory.CreateApproved();
 
         var repository = new FakeOpportunityRepository();
         repository.Add(opportunity);
@@ -95,8 +94,7 @@ public sealed class PublishOpportunityCommandHandlerTests
         var opportunity =
             OpportunityFactory.CreatePublishedModificationPendingManagerReview();
 
-        opportunity.Approve(
-            "manager-user");
+        opportunity.Approve("manager-user");
 
         var repository = new FakeOpportunityRepository();
         repository.Add(opportunity);
@@ -141,8 +139,7 @@ public sealed class PublishOpportunityCommandHandlerTests
     public async Task Handle_WhenOpportunityIsDraft_ThrowsWorkflowTransitionNotAllowedException()
     {
         // Arrange
-        var opportunity =
-            OpportunityFactory.CreateDraft();
+        var opportunity = OpportunityFactory.CreateDraft();
 
         var repository = new FakeOpportunityRepository();
         repository.Add(opportunity);
@@ -183,8 +180,7 @@ public sealed class PublishOpportunityCommandHandlerTests
     public async Task Handle_PassesCancellationTokenToRepository()
     {
         // Arrange
-        var opportunity =
-            OpportunityFactory.CreateApproved();
+        var opportunity = OpportunityFactory.CreateApproved();
 
         var repository = new FakeOpportunityRepository();
         repository.Add(opportunity);

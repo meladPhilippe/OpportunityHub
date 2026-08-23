@@ -91,8 +91,8 @@ public sealed class RejectOpportunityCommandHandlerTests
             opportunity.StatusCode);
 
         Assert.Null(opportunity.SubStatusCode);
-        
-        var submission =  Assert.Single(opportunity.Submissions);
+
+        var submission = Assert.Single(opportunity.Submissions);
 
         Assert.NotNull(
             submission.FinalRejection);
@@ -196,4 +196,59 @@ public sealed class RejectOpportunityCommandHandlerTests
             cancellationTokenSource.Token,
             repository.LastCancellationToken);
     }
+
+    [Fact]
+    public async Task Handle_WhenPublishedModificationIsPendingManagerReview_ThrowsWorkflowTransitionNotAllowedException()
+    {
+        // Arrange
+        var opportunity =
+            OpportunityFactory.CreatePublishedModificationPendingManagerReview();
+
+        var repository = new FakeOpportunityRepository();
+        repository.Add(opportunity);
+
+        var unitOfWork = new FakeUnitOfWork();
+        var currentUser = new FakeCurrentUser("manager-user");
+
+        var handler = new RejectOpportunityCommandHandler(
+            repository,
+            unitOfWork,
+            currentUser);
+
+        var command = new RejectOpportunityCommand(
+            opportunity.Id,
+            5,
+            "The published modification does not meet the requirements.");
+
+        // Act & Assert
+        await Assert.ThrowsAsync<WorkflowTransitionNotAllowedException>(
+            () => handler.Handle(
+                command,
+                CancellationToken.None));
+
+        // The published opportunity must remain under review.
+        Assert.Equal(
+            OpportunityStatusCode.PublishedUnderReview,
+            opportunity.StatusCode);
+
+        Assert.Equal(
+            OpportunitySubStatusCode.PendingManagerReview,
+            opportunity.SubStatusCode);
+
+        // No final rejection should have been created.
+        var submission =
+            opportunity.Submissions
+                .OrderByDescending(s => s.SequenceNumber)
+                .First();
+
+        Assert.Null(
+    submission.FinalRejection);
+        Assert.Null(
+            submission.FinalRejection);
+
+        Assert.Equal(
+            0,
+            unitOfWork.SaveChangesCallCount);
+    }
+
 }

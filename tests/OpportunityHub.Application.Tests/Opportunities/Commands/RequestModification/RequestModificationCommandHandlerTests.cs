@@ -175,6 +175,47 @@ public sealed class RequestModificationCommandHandlerTests
             repository.LastCancellationToken);
     }
 
+    [Fact]
+    public async Task Handle_WhenPublishedOpportunityIsPendingManagerReview_RequestsModificationAndRemainsUnderReview()
+    {
+        // Arrange
+        var opportunity =
+            OpportunityFactory.CreatePublishedModificationPendingManagerReview();
+
+        var repository = new FakeOpportunityRepository();
+        repository.Add(opportunity);
+
+        var unitOfWork = new FakeUnitOfWork();
+        var currentUser = new FakeCurrentUser("manager-user");
+
+        var handler = new RequestModificationCommandHandler(
+            repository,
+            unitOfWork,
+            currentUser);
+
+        var command = new RequestModificationCommand(
+            opportunity.Id,
+            CreateItems());
+
+        // Act
+        await handler.Handle(
+            command,
+            CancellationToken.None);
+
+        // Assert
+        Assert.Equal(
+            OpportunityStatusCode.PublishedUnderReview,
+            opportunity.StatusCode);
+
+        Assert.Equal(
+            OpportunitySubStatusCode.PendingSpecialistModification,
+            opportunity.SubStatusCode);
+
+        Assert.Equal(
+            1,
+            unitOfWork.SaveChangesCallCount);
+    }
+
     private static IReadOnlyCollection<ModificationRequestItem>
         CreateItems()
     {

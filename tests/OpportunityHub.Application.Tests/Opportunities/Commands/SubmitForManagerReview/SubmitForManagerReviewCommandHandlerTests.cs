@@ -180,7 +180,8 @@ public sealed class SubmitForManagerReviewCommandHandlerTests
 
         var command = new SubmitForManagerReviewCommand(
             opportunity.Id,
-            CreateContentRequest());
+            CreateContentRequest(),
+            "Update published opportunity");
 
         // Act
         var submissionId = await handler.Handle(
