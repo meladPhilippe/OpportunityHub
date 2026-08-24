@@ -12,20 +12,28 @@ public sealed class SubmitForManagerReviewCommandHandlerTests
     public async Task Handle_WhenOpportunityDoesNotExist_ThrowsInvalidOperationException()
     {
         // Arrange
-        var repository = new FakeOpportunityRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var currentUser = new FakeCurrentUser("test-user");
+        var repository =
+            new FakeOpportunityRepository();
 
-        var handler = new SubmitForManagerReviewCommandHandler(
-            repository,
-            unitOfWork,
-            currentUser);
+        var unitOfWork =
+            new FakeUnitOfWork();
 
-        var opportunityId = Guid.NewGuid();
+        var currentUser =
+            new FakeCurrentUser("test-user");
 
-        var command = new SubmitForManagerReviewCommand(
-            opportunityId,
-            CreateContentRequest());
+        var handler =
+            new SubmitForManagerReviewCommandHandler(
+                repository,
+                unitOfWork,
+                currentUser);
+
+        var opportunityId =
+            Guid.NewGuid();
+
+        var command =
+            new SubmitForManagerReviewCommand(
+                opportunityId,
+                CreateContentRequest());
 
         // Act
         var exception =
@@ -48,27 +56,36 @@ public sealed class SubmitForManagerReviewCommandHandlerTests
     public async Task Handle_WhenOpportunityIsDraft_SubmitsForManagerReviewAndSaves()
     {
         // Arrange
-        var opportunity = OpportunityFactory.CreateDraft();
+        var opportunity =
+            OpportunityFactory.CreateDraft();
 
-        var repository = new FakeOpportunityRepository();
+        var repository =
+            new FakeOpportunityRepository();
+
         repository.Add(opportunity);
 
-        var unitOfWork = new FakeUnitOfWork();
-        var currentUser = new FakeCurrentUser("reviewer-user");
+        var unitOfWork =
+            new FakeUnitOfWork();
 
-        var handler = new SubmitForManagerReviewCommandHandler(
-            repository,
-            unitOfWork,
-            currentUser);
+        var currentUser =
+            new FakeCurrentUser("reviewer-user");
 
-        var command = new SubmitForManagerReviewCommand(
-            opportunity.Id,
-            CreateContentRequest());
+        var handler =
+            new SubmitForManagerReviewCommandHandler(
+                repository,
+                unitOfWork,
+                currentUser);
+
+        var command =
+            new SubmitForManagerReviewCommand(
+                opportunity.Id,
+                CreateContentRequest());
 
         // Act
-        var submissionId = await handler.Handle(
-            command,
-            CancellationToken.None);
+        var submissionId =
+            await handler.Handle(
+                command,
+                CancellationToken.None);
 
         // Assert
         Assert.NotEqual(
@@ -106,25 +123,33 @@ public sealed class SubmitForManagerReviewCommandHandlerTests
             ],
             "manager-user");
 
-        var repository = new FakeOpportunityRepository();
+        var repository =
+            new FakeOpportunityRepository();
+
         repository.Add(opportunity);
 
-        var unitOfWork = new FakeUnitOfWork();
-        var currentUser = new FakeCurrentUser("specialist-user");
+        var unitOfWork =
+            new FakeUnitOfWork();
 
-        var handler = new SubmitForManagerReviewCommandHandler(
-            repository,
-            unitOfWork,
-            currentUser);
+        var currentUser =
+            new FakeCurrentUser("specialist-user");
 
-        var command = new SubmitForManagerReviewCommand(
-            opportunity.Id,
-            CreateContentRequest());
+        var handler =
+            new SubmitForManagerReviewCommandHandler(
+                repository,
+                unitOfWork,
+                currentUser);
+
+        var command =
+            new SubmitForManagerReviewCommand(
+                opportunity.Id,
+                CreateContentRequest());
 
         // Act
-        var submissionId = await handler.Handle(
-            command,
-            CancellationToken.None);
+        var submissionId =
+            await handler.Handle(
+                command,
+                CancellationToken.None);
 
         // Assert
         Assert.NotEqual(
@@ -167,26 +192,34 @@ public sealed class SubmitForManagerReviewCommandHandlerTests
             ],
             "manager-user");
 
-        var repository = new FakeOpportunityRepository();
+        var repository =
+            new FakeOpportunityRepository();
+
         repository.Add(opportunity);
 
-        var unitOfWork = new FakeUnitOfWork();
-        var currentUser = new FakeCurrentUser("specialist-user");
+        var unitOfWork =
+            new FakeUnitOfWork();
 
-        var handler = new SubmitForManagerReviewCommandHandler(
-            repository,
-            unitOfWork,
-            currentUser);
+        var currentUser =
+            new FakeCurrentUser("specialist-user");
 
-        var command = new SubmitForManagerReviewCommand(
-            opportunity.Id,
-            CreateContentRequest(),
-            "Update published opportunity");
+        var handler =
+            new SubmitForManagerReviewCommandHandler(
+                repository,
+                unitOfWork,
+                currentUser);
+
+        var command =
+            new SubmitForManagerReviewCommand(
+                opportunity.Id,
+                CreateContentRequest(),
+                "Update published opportunity");
 
         // Act
-        var submissionId = await handler.Handle(
-            command,
-            CancellationToken.None);
+        var submissionId =
+            await handler.Handle(
+                command,
+                CancellationToken.None);
 
         // Assert
         Assert.NotEqual(
@@ -211,25 +244,212 @@ public sealed class SubmitForManagerReviewCommandHandlerTests
     }
 
     [Fact]
+    public async Task Handle_WhenSubmissionIsCreated_ReturnsCreatedSubmissionId()
+    {
+        // Arrange
+        var opportunity =
+            OpportunityFactory.CreateDraft();
+
+        var repository =
+            new FakeOpportunityRepository();
+
+        repository.Add(opportunity);
+
+        var unitOfWork =
+            new FakeUnitOfWork();
+
+        var currentUser =
+            new FakeCurrentUser("reviewer-user");
+
+        var handler =
+            new SubmitForManagerReviewCommandHandler(
+                repository,
+                unitOfWork,
+                currentUser);
+
+        var command =
+            new SubmitForManagerReviewCommand(
+                opportunity.Id,
+                CreateContentRequest());
+
+        // Act
+        var submissionId =
+            await handler.Handle(
+                command,
+                CancellationToken.None);
+
+        // Assert
+        var submission =
+            Assert.Single(
+                opportunity.Submissions);
+
+        Assert.Equal(
+            submission.Id,
+            submissionId);
+    }
+
+    [Fact]
+    public async Task Handle_WhenContentIsProvided_MapsContentToSubmissionVersion()
+    {
+        // Arrange
+        var opportunity =
+            OpportunityFactory.CreateDraft();
+
+        var repository =
+            new FakeOpportunityRepository();
+
+        repository.Add(opportunity);
+
+        var unitOfWork =
+            new FakeUnitOfWork();
+
+        var currentUser =
+            new FakeCurrentUser("reviewer-user");
+
+        var handler =
+            new SubmitForManagerReviewCommandHandler(
+                repository,
+                unitOfWork,
+                currentUser);
+
+        var command =
+            new SubmitForManagerReviewCommand(
+                opportunity.Id,
+                new OpportunityVersionContentRequest
+                {
+                    OpportunityName =
+                        new LocalizedTextRequest(
+                            "Updated Opportunity",
+                            "فرصة محدثة"),
+
+                    Description =
+                        new LocalizedTextRequest(
+                            "Opportunity description",
+                            "وصف الفرصة")
+                });
+
+        // Act
+        await handler.Handle(
+            command,
+            CancellationToken.None);
+
+        // Assert
+        var submission =
+            Assert.Single(
+                opportunity.Submissions);
+
+        var version =
+            opportunity.Versions
+                .Single(x =>
+                    x.Id == submission.OpportunityVersionId);
+
+        Assert.Equal(
+            "Updated Opportunity",
+            version.OpportunityName.En);
+
+        Assert.Equal(
+            "فرصة محدثة",
+            version.OpportunityName.Ar);
+
+        Assert.Equal(
+            "Opportunity description",
+            version.Description!.En);
+
+        Assert.Equal(
+            "وصف الفرصة",
+            version.Description.Ar);
+    }
+
+    [Fact]
+    public async Task Handle_WhenSubmittingModification_PreservesEditSummary()
+    {
+        // Arrange
+        var opportunity =
+            OpportunityFactory.CreatePublished();
+
+        opportunity.SubmitForManagerReview(
+            OpportunityFactory.CreateContent(),
+            "specialist-user",
+            "Previous update");
+
+        opportunity.RequestModification(
+            [
+                (
+                    "Description",
+                    "Please provide additional information.")
+            ],
+            "manager-user");
+
+        var repository =
+            new FakeOpportunityRepository();
+
+        repository.Add(opportunity);
+
+        var unitOfWork =
+            new FakeUnitOfWork();
+
+        var currentUser =
+            new FakeCurrentUser("specialist-user");
+
+        var handler =
+            new SubmitForManagerReviewCommandHandler(
+                repository,
+                unitOfWork,
+                currentUser);
+
+        const string editSummary =
+            "Updated description based on manager feedback.";
+
+        var command =
+            new SubmitForManagerReviewCommand(
+                opportunity.Id,
+                CreateContentRequest(),
+                editSummary);
+
+        // Act
+        await handler.Handle(
+            command,
+            CancellationToken.None);
+
+        // Assert
+        var submission =
+            opportunity.Submissions
+                .OrderByDescending(x => x.SequenceNumber)
+                .First();
+
+        Assert.Equal(
+            editSummary,
+            submission.EditSummary);
+    }
+
+    [Fact]
     public async Task Handle_PassesCancellationTokenToRepository()
     {
         // Arrange
-        var opportunity = OpportunityFactory.CreateDraft();
+        var opportunity =
+            OpportunityFactory.CreateDraft();
 
-        var repository = new FakeOpportunityRepository();
+        var repository =
+            new FakeOpportunityRepository();
+
         repository.Add(opportunity);
 
-        var unitOfWork = new FakeUnitOfWork();
-        var currentUser = new FakeCurrentUser("test-user");
+        var unitOfWork =
+            new FakeUnitOfWork();
 
-        var handler = new SubmitForManagerReviewCommandHandler(
-            repository,
-            unitOfWork,
-            currentUser);
+        var currentUser =
+            new FakeCurrentUser("test-user");
 
-        var command = new SubmitForManagerReviewCommand(
-            opportunity.Id,
-            CreateContentRequest());
+        var handler =
+            new SubmitForManagerReviewCommandHandler(
+                repository,
+                unitOfWork,
+                currentUser);
+
+        var command =
+            new SubmitForManagerReviewCommand(
+                opportunity.Id,
+                CreateContentRequest());
 
         using var cancellationTokenSource =
             new CancellationTokenSource();
@@ -251,9 +471,10 @@ public sealed class SubmitForManagerReviewCommandHandlerTests
     {
         return new OpportunityVersionContentRequest
         {
-            OpportunityName = new LocalizedTextRequest(
-                "Updated Opportunity",
-                "فرصة محدثة")
+            OpportunityName =
+                new LocalizedTextRequest(
+                    "Updated Opportunity",
+                    "فرصة محدثة")
         };
     }
 }

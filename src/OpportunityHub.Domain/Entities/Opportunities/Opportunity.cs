@@ -278,7 +278,7 @@ public sealed class Opportunity : ChangeTrackedEntity
             version.Id,
             submission.Id,
             WorkflowActivityType.SubmittedForManagerReview,
-            null,
+            AuditRelatedEntityType.None,
             null,
             submittedBy,
             timestamp);
@@ -315,7 +315,7 @@ public sealed class Opportunity : ChangeTrackedEntity
             GetCurrentVersion().Id,
             submission.Id,
             WorkflowActivityType.ModificationRequested,
-            nameof(ModificationRequest),
+            AuditRelatedEntityType.ModificationRequest,
             submission.ModificationRequest?.Id,
             requestedBy,
             timestamp);
@@ -350,7 +350,7 @@ public sealed class Opportunity : ChangeTrackedEntity
             GetCurrentVersion().Id,
             submission.Id,
             WorkflowActivityType.Approved,
-            null,
+            AuditRelatedEntityType.None,
             null,
             approvedBy,
             timestamp);
@@ -388,7 +388,7 @@ public sealed class Opportunity : ChangeTrackedEntity
             GetCurrentVersion().Id,
             submission.Id,
             WorkflowActivityType.OpportunityRejected,
-            nameof(FinalRejection),
+            AuditRelatedEntityType.FinalRejection,
             submission.FinalRejection?.Id,
             rejectedBy,
             timestamp);
@@ -428,7 +428,7 @@ public sealed class Opportunity : ChangeTrackedEntity
             GetCurrentVersion().Id,
             submission.Id,
             WorkflowActivityType.ModificationRejected,
-            nameof(ModificationRejection),
+            AuditRelatedEntityType.ModificationRejection,
             submission.ModificationRejection?.Id,
             rejectedBy,
             timestamp);
@@ -480,7 +480,7 @@ public sealed class Opportunity : ChangeTrackedEntity
             version.Id,
             null,
             WorkflowActivityType.Published,
-            null,
+            AuditRelatedEntityType.None,
             null,
             publishedBy,
             timestamp);
@@ -509,7 +509,7 @@ public sealed class Opportunity : ChangeTrackedEntity
             version.Id,
             null,
             WorkflowActivityType.Unpublished,
-            null,
+            AuditRelatedEntityType.None,
             null,
             unpublishedBy,
             timestamp);
@@ -556,7 +556,7 @@ public sealed class Opportunity : ChangeTrackedEntity
         Guid opportunityVersionId,
         Guid? submissionId,
         WorkflowActivityType activityType,
-        string? relatedEntityType,
+        AuditRelatedEntityType relatedEntityType,
         Guid? relatedEntityId,
         string createdBy = null!,
         DateTime? occurredAtUtc = null!)

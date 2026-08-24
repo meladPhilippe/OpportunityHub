@@ -20,6 +20,29 @@ public sealed class OpportunityHubDbContext : DbContext
 
     #endregion
 
+    #region Aggregate Members
+
+    public DbSet<Submission> Submissions =>
+        Set<Submission>();
+
+    public DbSet<ModificationRequest> ModificationRequests =>
+        Set<ModificationRequest>();
+
+    public DbSet<ModificationRejection> ModificationRejections =>
+        Set<ModificationRejection>();
+
+    public DbSet<FinalRejection> FinalRejections =>
+        Set<FinalRejection>();
+
+    #endregion
+
+    #region Audit
+
+    public DbSet<AuditHistory> AuditHistories =>
+        Set<AuditHistory>();
+
+    #endregion
+
     #region Reference Data
 
     public DbSet<Channel> Channels =>

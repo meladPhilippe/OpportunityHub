@@ -354,7 +354,10 @@ public sealed class OpportunityTests
             WorkflowActivityType.SubmittedForManagerReview,
             audit.ActivityType);
 
-        Assert.Null(audit.RelatedEntityType);
+        Assert.Equal(
+            "None",
+            audit.RelatedEntityType);
+
         Assert.Null(audit.RelatedEntityId);
 
         Assert.Equal(
@@ -558,7 +561,9 @@ public sealed class OpportunityTests
             submission.Id,
             audit.SubmissionId);
 
-        Assert.Null(audit.RelatedEntityType);
+        Assert.Equal(
+            "None",
+            audit.RelatedEntityType);
         Assert.Null(audit.RelatedEntityId);
     }
 
@@ -802,7 +807,9 @@ public sealed class OpportunityTests
             audit.OpportunityVersionId);
 
         Assert.Null(audit.SubmissionId);
-        Assert.Null(audit.RelatedEntityType);
+        Assert.Equal(
+            "None",
+            audit.RelatedEntityType);
         Assert.Null(audit.RelatedEntityId);
 
         Assert.Equal(
@@ -1232,7 +1239,9 @@ public sealed class OpportunityTests
             audit.OpportunityVersionId);
 
         Assert.Null(audit.SubmissionId);
-        Assert.Null(audit.RelatedEntityType);
+        Assert.Equal(
+            "None",
+            audit.RelatedEntityType);
         Assert.Null(audit.RelatedEntityId);
 
         Assert.Equal(

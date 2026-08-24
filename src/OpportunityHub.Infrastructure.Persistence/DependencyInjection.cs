@@ -20,6 +20,11 @@ public static class DependencyInjection
             });
 
         services.AddScoped<IOpportunityRepository, OpportunityRepository>();
+        services.AddScoped<IAuditHistoryRepository, AuditHistoryRepository>();
+        services.AddScoped<ISubmissionRepository, SubmissionRepository>();
+        services.AddScoped<IModificationRequestRepository,ModificationRequestRepository>();
+        services.AddScoped<IModificationRejectionRepository,    ModificationRejectionRepository>();
+        services.AddScoped<IFinalRejectionRepository,FinalRejectionRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }

@@ -45,8 +45,8 @@ public sealed class AuditHistoryConfiguration
             .IsRequired();
 
         builder.Property(x => x.RelatedEntityType)
-            .HasMaxLength(200)
-            .IsRequired(false);
+            .HasMaxLength(50)
+            .IsRequired(true);
 
         builder.Property(x => x.RelatedEntityId)
             .IsRequired(false);
@@ -112,6 +112,19 @@ public sealed class AuditHistoryConfiguration
                 table.HasCheckConstraint(
                     "CK_AuditHistory_ActivitySequenceNumber",
                     "[ActivitySequenceNumber] > 0");
+
+                table.HasCheckConstraint(
+                    "CK_AuditHistory_RelatedEntityType",
+                    "[RelatedEntityType] IN " +
+                    "('None', " +
+                    "'ModificationRequest', " +
+                    "'ModificationRejection', " +
+                    "'FinalRejection')");
+                table.HasCheckConstraint(
+                    "CK_AuditHistory_RelatedEntityReference",
+                    "([RelatedEntityType] = 'None' AND [RelatedEntityId] IS NULL) " +
+                    "OR " +
+                    "([RelatedEntityType] <> 'None' AND [RelatedEntityId] IS NOT NULL)");
             });
 
         #endregion

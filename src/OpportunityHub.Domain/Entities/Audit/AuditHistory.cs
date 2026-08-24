@@ -1,4 +1,5 @@
 using OpportunityHub.Domain.Enums;
+using OpportunityHub.Domain.Extensions;
 
 namespace OpportunityHub.Domain.Entities.Audit;
 
@@ -14,18 +15,19 @@ public sealed class AuditHistory : CreationTrackedObject
         Guid? submissionId,
         long activitySequenceNumber,
         WorkflowActivityType activityType,
-        string? relatedEntityType,
+        AuditRelatedEntityType relatedEntityType,
         Guid? relatedEntityId,
         string createdBy = null!,
         DateTime? occurredAtUtc = null!)
         : base(createdBy, occurredAtUtc ?? DateTime.UtcNow)
     {
+        
         OpportunityId = opportunityId;
         OpportunityVersionId = opportunityVersionId;
         SubmissionId = submissionId;
         ActivitySequenceNumber = activitySequenceNumber;
         ActivityType = activityType;
-        RelatedEntityType = relatedEntityType;
+        RelatedEntityType = relatedEntityType.ToDatabaseValue();
         RelatedEntityId = relatedEntityId;
     }
 
@@ -41,7 +43,7 @@ public sealed class AuditHistory : CreationTrackedObject
 
     public WorkflowActivityType ActivityType { get; private set; }
 
-    public string? RelatedEntityType { get; private set; }
+    public string RelatedEntityType { get; private set; }  = string.Empty;
 
     public Guid? RelatedEntityId { get; private set; }
 
@@ -55,7 +57,7 @@ public sealed class AuditHistory : CreationTrackedObject
         Guid? submissionId,
         long activitySequenceNumber,
         WorkflowActivityType activityType,
-        string? relatedEntityType,
+        AuditRelatedEntityType relatedEntityType,
         Guid? relatedEntityId,
         string createdBy = null!,
         DateTime? occurredAtUtc = null!)
