@@ -14,7 +14,7 @@ CREATE TABLE dbo.AuditHistory
 
     ActivityType INT NOT NULL,
 
-    RelatedEntityType NVARCHAR(200) NULL,
+    RelatedEntityType NVARCHAR(50) NULL,
 
     RelatedEntityId UNIQUEIDENTIFIER NULL,
 

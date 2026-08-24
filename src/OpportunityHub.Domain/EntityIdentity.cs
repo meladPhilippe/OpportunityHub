@@ -1,20 +1,45 @@
 namespace OpportunityHub.Domain;
 
 /// <summary>
-/// Base type for domain objects that have a distinct identity
-/// throughout their lifecycle.
+/// Base type for entities that have a strongly typed identity.
+/// Guid is the default identity type.
 /// </summary>
-public abstract class EntityIdentity : DomainObject
+public abstract class EntityIdentity<TId> : DomainObject
+    where TId : notnull
 {
-    public Guid Id { get; protected set; }
+    public TId Id { get; protected set; }
 
+    protected EntityIdentity(
+        Func<TId>? idFactory = null)
+    {
+        Id = idFactory is not null
+            ? idFactory()
+            : CreateDefaultId();
+    }
+
+    protected EntityIdentity(TId id)
+    {
+        Id = id;
+    }
+
+    private static TId CreateDefaultId()
+    {
+        if (typeof(TId) == typeof(Guid))
+        {
+            return (TId)(object)Guid.NewGuid();
+        }
+
+        return default!;
+    }
+}
+public abstract class EntityIdentity : EntityIdentity<Guid>
+{
     protected EntityIdentity()
     {
-        Id = Guid.NewGuid();
     }
 
     protected EntityIdentity(Guid id)
     {
-        Id = id;
+        Id = Guid.NewGuid();        
     }
 }

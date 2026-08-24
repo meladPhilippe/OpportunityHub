@@ -22,6 +22,11 @@ public sealed class OpportunityVersionChannel : CreationTrackedObject
         ChannelId = channelId;
     }
 
+    private OpportunityVersionChannel()
+    {
+        
+    }
+
     #region Properties
 
     public Guid ChannelId { get; private set; }

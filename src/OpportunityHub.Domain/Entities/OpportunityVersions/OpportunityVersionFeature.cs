@@ -16,6 +16,10 @@ public sealed class OpportunityVersionFeature : EntityIdentity
         SortOrder = content.SortOrder;
         DisplayOnWebsite = content.DisplayOnWebsite;
     }
+    private OpportunityVersionFeature()
+    {
+        
+    }
 
     #region Properties
 

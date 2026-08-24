@@ -24,6 +24,10 @@ public sealed class FinalRejection : CreationTrackedEntity
         Comment = comment;
     }
 
+    private FinalRejection()
+    {
+    }
+
     #region Properties
 
     public int RejectionReasonId { get; private set; }

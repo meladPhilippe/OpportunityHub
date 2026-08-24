@@ -17,7 +17,7 @@
     <include file="009-create-opportunity-version-kpi.sql" relativeToChangelogFile="true"/>
     <include file="010-create-submission.sql"  relativeToChangelogFile="true"/>
     <include file="011-create-modification-request.sql" relativeToChangelogFile="true"/>
-    <include file="012-create-modification-request-item.sql"relativeToChangelogFile="true"/>
+    <include file="012-create-modification-request-item.sql" relativeToChangelogFile="true"/>
     <include file="013-create-modification-rejection.sql" relativeToChangelogFile="true"/>
     <include file="014-create-rejection-reason.sql" relativeToChangelogFile="true"/>
     <include file="015-create-final-rejection.sql" relativeToChangelogFile="true"/>

@@ -17,6 +17,10 @@ public sealed class ModificationRejection : CreationTrackedEntity
         Comment = comment;
     }
 
+    private ModificationRejection()
+    {
+    }
+
     #region Properties
 
     public string Comment { get; private set; } = string.Empty;

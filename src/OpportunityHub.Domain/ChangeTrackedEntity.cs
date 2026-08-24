@@ -4,7 +4,9 @@ namespace OpportunityHub.Domain;
 /// Base type for entities that have identity, creation tracking,
 /// and update tracking.
 /// </summary>
-public abstract class ChangeTrackedEntity : CreationTrackedEntity
+public abstract class ChangeTrackedEntity<TId>
+    : CreationTrackedEntity<TId>
+    where TId : notnull
 {
     public DateTime? UpdatedAtUtc { get; protected set; }
 
@@ -24,4 +26,19 @@ public abstract class ChangeTrackedEntity : CreationTrackedEntity
         UpdatedBy = updatedBy;
         UpdatedAtUtc = updatedAtUtc ?? DateTime.UtcNow;
     }
+}
+
+/// <summary>
+/// Default change-tracked entity using Guid identity.
+/// </summary>
+public abstract class ChangeTrackedEntity
+    : ChangeTrackedEntity<Guid>
+{
+    protected ChangeTrackedEntity(
+        string createdBy = "SYS",
+        DateTime? createdAtUtc = null)
+        : base(createdBy,createdAtUtc)
+    {
+    }
+
 }

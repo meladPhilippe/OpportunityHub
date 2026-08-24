@@ -30,6 +30,9 @@ public sealed class AuditHistory : CreationTrackedObject
         RelatedEntityType = relatedEntityType.ToDatabaseValue();
         RelatedEntityId = relatedEntityId;
     }
+    private AuditHistory()
+    {
+    }
 
     #region Properties
 

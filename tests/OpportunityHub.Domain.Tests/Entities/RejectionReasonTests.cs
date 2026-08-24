@@ -42,10 +42,7 @@ public sealed class RejectionReasonTests
             CreatedAtUtc);
 
         // Assert
-        Assert.NotEqual(
-            Guid.Empty,
-            rejectionReason.Id);
-
+    
         Assert.Equal(
             Code,
             rejectionReason.Code);

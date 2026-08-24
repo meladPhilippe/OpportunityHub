@@ -16,6 +16,10 @@ public sealed class OpportunityVersionKpi : EntityIdentity
         SortOrder = content.SortOrder;
     }
 
+    private OpportunityVersionKpi()
+    {
+        
+    }
     #region Properties
 
     public LocalizedText? Title { get; private set; }

@@ -6,7 +6,7 @@ namespace OpportunityHub.Domain.Entities;
 /// Represents a reference-data rejection reason that can be
 /// associated with a final rejection.
 /// </summary>
-public sealed class RejectionReason : ChangeTrackedEntity
+public sealed class RejectionReason : ChangeTrackedEntity<int>
 {
     private RejectionReason(
         string code,

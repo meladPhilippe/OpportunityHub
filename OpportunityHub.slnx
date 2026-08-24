@@ -8,5 +8,6 @@
   <Folder Name="/tests/">
     <Project Path="tests/OpportunityHub.Application.Tests/OpportunityHub.Application.Tests.csproj" />
     <Project Path="tests/OpportunityHub.Domain.Tests/OpportunityHub.Domain.Tests.csproj" />
+    <Project Path="tests/OpportunityHub.Infrastructure.Persistence.Tests/OpportunityHub.Infrastructure.Persistence.Tests.csproj" />
   </Folder>
 </Solution>

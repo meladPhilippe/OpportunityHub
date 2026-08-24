@@ -16,6 +16,10 @@ public sealed class ModificationRequest : CreationTrackedEntity
     {
     }
 
+    private ModificationRequest()
+    {
+    }
+
     #region Properties
 
     public IReadOnlyCollection<ModificationRequestItem> Items =>

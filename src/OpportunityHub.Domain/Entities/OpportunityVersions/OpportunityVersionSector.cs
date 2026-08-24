@@ -22,6 +22,11 @@ public sealed class OpportunityVersionSector : CreationTrackedObject
         SectorId = sectorId;
     }
 
+    private OpportunityVersionSector()
+    {
+        
+    }
+
     #region Properties
 
     public Guid SectorId { get; private set; }

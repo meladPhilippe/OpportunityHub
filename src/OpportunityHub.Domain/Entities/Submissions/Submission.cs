@@ -79,6 +79,10 @@ public sealed class Submission : EntityIdentity
             submittedBy,
             submittedAtUtc ?? DateTime.UtcNow);
     }
+    private Submission()
+    {
+        
+    }
 
     #endregion
 

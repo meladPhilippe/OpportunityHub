@@ -10,11 +10,16 @@ public sealed class ModificationRequestItem : DomainObject
         Comment = comment;
     }
 
+    private ModificationRequestItem()
+    {
+        
+    }
+
     #region Properties
 
-    public string FieldName { get; private set; }
+    public string FieldName { get; private set; } = string.Empty;
 
-    public string Comment { get; private set; }
+    public string Comment { get; private set; } = string.Empty;
 
     #endregion
 }

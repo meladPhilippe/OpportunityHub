@@ -18,6 +18,11 @@ public sealed class OpportunityVersionKeyAchievement : EntityIdentity
         DisplayOnWebsite = content.DisplayOnWebsite;
     }
 
+    private OpportunityVersionKeyAchievement()
+    {
+        
+    }
+
     #region Properties
 
     public int? IconReference { get; private set; }
