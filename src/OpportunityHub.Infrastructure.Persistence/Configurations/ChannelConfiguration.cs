@@ -43,12 +43,12 @@ public sealed class ChannelConfiguration
             {
                 name.Property(x => x.En)
                     .HasColumnName("NameEn")
-                    .HasMaxLength(1000)
+                    .HasMaxLength(500)
                     .IsRequired();
 
                 name.Property(x => x.Ar)
                     .HasColumnName("NameAr")
-                    .HasMaxLength(1000)
+                    .HasMaxLength(500)
                     .IsRequired(false);
             });
 

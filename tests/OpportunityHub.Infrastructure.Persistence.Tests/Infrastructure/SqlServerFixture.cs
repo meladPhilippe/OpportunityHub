@@ -109,6 +109,81 @@ public sealed class SqlServerFixture : IAsyncLifetime
                 $"===== LIQUIBASE STDOUT =====\\n{stdout}\\n" +
                 $"===== LIQUIBASE STDERR =====\\n{stderr}");
         }
+
+        await SeedReferenceDataAsync();
+
+        Console.WriteLine("===== REFERENCE DATA SEEDED =====");
+
+        Console.WriteLine("===== REFERENCE DATA SEEDED =====");
+    }
+
+    private async Task SeedReferenceDataAsync()
+    {
+        await using var db = CreateDbContext();
+
+        await db.Database.ExecuteSqlRawAsync(
+            """
+            INSERT INTO dbo.Channel
+            (
+                Id,
+                Code,
+                NameEn,
+                NameAr,
+                SortOrder,
+                IsActive,
+                CreatedBy
+            )
+            VALUES
+            (
+                '11111111-1111-1111-1111-111111111111',
+                1,
+                N'Test Channel 1',
+                N'قناة اختبار 1',
+                1,
+                1,
+                N'integration-test'
+            ),
+            (
+                '22222222-2222-2222-2222-222222222222',
+                2,
+                N'Test Channel 2',
+                N'قناة اختبار 2',
+                2,
+                1,
+                N'integration-test'
+            );
+
+            INSERT INTO dbo.Sector
+            (
+                Id,
+                Code,
+                NameEn,
+                NameAr,
+                SortOrder,
+                IsActive,
+                CreatedBy
+            )
+            VALUES
+            (
+                '33333333-3333-3333-3333-333333333333',
+                1,
+                N'Test Sector 1',
+                N'قطاع اختبار 1',
+                1,
+                1,
+                N'integration-test'
+            ),
+            (
+                '44444444-4444-4444-4444-444444444444',
+                2,
+                N'Test Sector 2',
+                N'قطاع اختبار 2',
+                2,
+                1,
+                N'integration-test'
+            );
+            """,
+            TestContext.Current.CancellationToken);
     }
 
     public async ValueTask DisposeAsync()

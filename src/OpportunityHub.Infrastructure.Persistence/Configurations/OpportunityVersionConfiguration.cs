@@ -20,7 +20,7 @@ public sealed class OpportunityVersionConfiguration
             .ValueGeneratedNever();
 
         #endregion
-        
+
         #region Principal Key for Composite Relationships
 
         builder.HasAlternateKey(x => new
