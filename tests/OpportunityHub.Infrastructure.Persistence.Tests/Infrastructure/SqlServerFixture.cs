@@ -54,7 +54,7 @@ public sealed class SqlServerFixture : IAsyncLifetime
             .WithNetworkAliases(SqlServerAlias)
             .Build();
 
-        _liquibase = new ContainerBuilder("liquibase/liquibase:5.0.2")
+        _liquibase = new ContainerBuilder("liquibase/liquibase:5.0.3")
             .WithNetwork(_network)
             .WithBindMount(
                 dbManagerPath,
@@ -63,7 +63,6 @@ public sealed class SqlServerFixture : IAsyncLifetime
                 Path.Combine(dbManagerPath, "mssql-jdbc.jar"),
                 "/liquibase/lib/mssql-jdbc.jar")
             .WithCommand(
-                "--classpath=/liquibase/lib/mssql-jdbc.jar",
                 "--url=jdbc:sqlserver://sqlserver:1433;databaseName=OpportunityHubDb;encrypt=false;trustServerCertificate=true",
                 "--username=sa",
                 $"--password={password}",

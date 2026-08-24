@@ -9,7 +9,7 @@
     <include file="tables/tables.xml"
              relativeToChangelogFile="true"/>
 
-    <include file="data/data.xml"
+    <include file="data/001-seed-rejection-reason.sql"
              relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

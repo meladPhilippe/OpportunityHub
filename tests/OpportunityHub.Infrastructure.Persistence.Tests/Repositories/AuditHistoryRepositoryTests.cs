@@ -8,8 +8,8 @@ using OpportunityHub.Infrastructure.Persistence.Tests.Infrastructure;
 
 namespace OpportunityHub.Infrastructure.Persistence.Tests.Repositories;
 
+[Collection("Infrastructure Integration Tests")]
 public sealed class AuditHistoryRepositoryTests
-    : IClassFixture<SqlServerFixture>
 {
     private readonly SqlServerFixture _fixture;
 

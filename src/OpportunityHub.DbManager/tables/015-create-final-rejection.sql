@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset melad:014-create-final-rejection
+--changeset melad:015-create-final-rejection
 
 CREATE TABLE dbo.FinalRejection
 (
@@ -8,7 +8,7 @@ CREATE TABLE dbo.FinalRejection
 
     SubmissionId UNIQUEIDENTIFIER NOT NULL,
 
-    RejectionReasonId UNIQUEIDENTIFIER NOT NULL,
+    RejectionReasonId INT NOT NULL,
 
     Comment NVARCHAR(4000) NOT NULL,
 

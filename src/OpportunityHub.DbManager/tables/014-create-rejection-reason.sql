@@ -1,10 +1,10 @@
 --liquibase formatted sql
 
---changeset melad:015-create-rejection-reason
+--changeset melad:014-create-rejection-reason
 
 CREATE TABLE dbo.RejectionReason
 (
-    Id UNIQUEIDENTIFIER NOT NULL,
+    Id int NOT NULL,
 
     Code NVARCHAR(100) NOT NULL,
 

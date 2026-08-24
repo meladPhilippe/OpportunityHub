@@ -5,7 +5,8 @@ using Xunit;
 
 namespace OpportunityHub.Infrastructure.Persistence.Tests.Infrastructure;
 
-public sealed class SqlServerFixtureTests : IClassFixture<SqlServerFixture>
+[Collection("Infrastructure Integration Tests")]
+public sealed class SqlServerFixtureTests
 {
     private readonly SqlServerFixture _fixture;
 
