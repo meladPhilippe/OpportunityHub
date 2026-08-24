@@ -3,7 +3,6 @@ using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Networks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using OpportunityHub.Infrastructure.Persistence;
 using Testcontainers.MsSql;
 
 namespace OpportunityHub.Infrastructure.Persistence.Tests.Infrastructure;
@@ -55,11 +54,14 @@ public sealed class SqlServerFixture : IAsyncLifetime
             .WithNetworkAliases(SqlServerAlias)
             .Build();
 
-        _liquibase = new ContainerBuilder("opportunityhub-liquibase:5.0.2")
+        _liquibase = new ContainerBuilder("liquibase/liquibase:5.0.2")
             .WithNetwork(_network)
             .WithBindMount(
                 dbManagerPath,
                 "/liquibase/changelog")
+            .WithBindMount(
+                Path.Combine(dbManagerPath, "mssql-jdbc.jar"),
+                "/liquibase/lib/mssql-jdbc.jar")
             .WithCommand(
                 "--classpath=/liquibase/lib/mssql-jdbc.jar",
                 "--url=jdbc:sqlserver://sqlserver:1433;databaseName=OpportunityHubDb;encrypt=false;trustServerCertificate=true",
@@ -104,7 +106,9 @@ public sealed class SqlServerFixture : IAsyncLifetime
             Console.WriteLine(stderr);
 
             throw new InvalidOperationException(
-                $"Liquibase failed with exit code {exitCode}.");
+                $"Liquibase failed with exit code {exitCode}.\\n" +
+                $"===== LIQUIBASE STDOUT =====\\n{stdout}\\n" +
+                $"===== LIQUIBASE STDERR =====\\n{stderr}");
         }
     }
 

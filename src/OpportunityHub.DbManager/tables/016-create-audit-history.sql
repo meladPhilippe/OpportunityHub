@@ -14,7 +14,7 @@ CREATE TABLE dbo.AuditHistory
 
     ActivityType INT NOT NULL,
 
-    RelatedEntityType NVARCHAR(50) NULL,
+    RelatedEntityType NVARCHAR(50) NOT NULL,
 
     RelatedEntityId UNIQUEIDENTIFIER NULL,
 
@@ -40,7 +40,25 @@ CREATE TABLE dbo.AuditHistory
         REFERENCES dbo.Submission(Id),
 
     CONSTRAINT CK_AuditHistory_ActivitySequenceNumber
-        CHECK (ActivitySequenceNumber > 0)
+        CHECK (ActivitySequenceNumber > 0),
+
+    CONSTRAINT CK_AuditHistory_RelatedEntityType
+        CHECK (
+            RelatedEntityType IN
+            (
+                'None',
+                'ModificationRequest',
+                'ModificationRejection',
+                'FinalRejection'
+            )
+        ),
+
+    CONSTRAINT CK_AuditHistory_RelatedEntityReference
+        CHECK (
+            (RelatedEntityType = 'None' AND RelatedEntityId IS NULL)
+            OR
+            (RelatedEntityType <> 'None' AND RelatedEntityId IS NOT NULL)
+        )
 );
 
 --rollback DROP TABLE dbo.AuditHistory;
