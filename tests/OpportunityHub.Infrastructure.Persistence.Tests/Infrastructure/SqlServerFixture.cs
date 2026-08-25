@@ -10,6 +10,7 @@ namespace OpportunityHub.Infrastructure.Persistence.Tests.Infrastructure;
 public sealed class SqlServerFixture : IAsyncLifetime
 {
     private const string SqlServerAlias = "sqlserver";
+    private const string LiquibaseImage = "opportunityhub-liquibase:5.0.2-mssql";
 
     private readonly INetwork _network;
     private readonly MsSqlContainer _sqlServer;
@@ -54,14 +55,11 @@ public sealed class SqlServerFixture : IAsyncLifetime
             .WithNetworkAliases(SqlServerAlias)
             .Build();
 
-        _liquibase = new ContainerBuilder("liquibase/liquibase:5.0.3")
+        _liquibase = new ContainerBuilder(LiquibaseImage)
             .WithNetwork(_network)
             .WithBindMount(
                 dbManagerPath,
                 "/liquibase/changelog")
-            .WithBindMount(
-                Path.Combine(dbManagerPath, "mssql-jdbc.jar"),
-                "/liquibase/lib/mssql-jdbc.jar")
             .WithCommand(
                 "--url=jdbc:sqlserver://sqlserver:1433;databaseName=OpportunityHubDb;encrypt=false;trustServerCertificate=true",
                 "--username=sa",
