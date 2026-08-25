@@ -194,6 +194,30 @@ public sealed class Opportunity : ChangeTrackedEntity
 
     #endregion
 
+    /// <summary>
+    /// Updates the current working version of a draft opportunity.
+    /// Draft edits do not create submissions or audit history.
+    /// </summary>
+    public void UpdateDraft(
+        OpportunityVersionContent content,
+        string updatedBy,
+        DateTime? updatedAtUtc = null)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentException.ThrowIfNullOrWhiteSpace(updatedBy);
+
+        if (!IsDraft)
+        {
+            throw new WorkflowDomainException(
+                "Only a draft opportunity can be edited.");
+        }
+
+        GetCurrentVersion().ApplyContent(
+            content,
+            updatedBy,
+            updatedAtUtc);
+    }
+
     #region Workflow
 
     /// <summary>

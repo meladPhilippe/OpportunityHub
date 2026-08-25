@@ -42,4 +42,18 @@ public sealed class OpportunityRepository : IOpportunityRepository
                 x => x.Id == id,
                 cancellationToken);
     }
+
+    public void Add(Opportunity opportunity)
+    {
+        ArgumentNullException.ThrowIfNull(opportunity);
+
+        _dbContext.Opportunities.Add(opportunity);
+    }
+
+    public void Delete(Opportunity opportunity)
+    {
+        ArgumentNullException.ThrowIfNull(opportunity);
+
+        _dbContext.Opportunities.Remove(opportunity);
+    }
 }

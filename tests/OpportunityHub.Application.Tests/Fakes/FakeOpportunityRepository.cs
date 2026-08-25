@@ -9,9 +9,20 @@ public sealed class FakeOpportunityRepository : IOpportunityRepository
 
     public CancellationToken LastCancellationToken { get; private set; }
 
+    public Opportunity? DeletedOpportunity { get; private set; }
+
     public void Add(Opportunity opportunity)
     {
         _opportunities[opportunity.Id] = opportunity;
+    }
+
+    public void Delete(Opportunity opportunity)
+    {
+        ArgumentNullException.ThrowIfNull(opportunity);
+
+        DeletedOpportunity = opportunity;
+
+        _opportunities.Remove(opportunity.Id);
     }
 
     public Task<Opportunity?> GetByIdAsync(

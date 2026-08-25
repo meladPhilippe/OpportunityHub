@@ -242,8 +242,6 @@ public sealed class RejectOpportunityCommandHandlerTests
                 .First();
 
         Assert.Null(
-    submission.FinalRejection);
-        Assert.Null(
             submission.FinalRejection);
 
         Assert.Equal(
